@@ -1,1 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Apex Tutors</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* A light, welcoming gray */
+        }
+        .cta-button {
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-blue-600">
+                <i class="fas fa-graduation-cap mr-2"></i>Apex Tutors
+            </a>
+            <a href="index.html" class="text-gray-600 hover:text-blue-600 transition">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Home
+            </a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- About Us Section -->
+        <section class="py-20 md:py-28">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900">
+                    Our Mission: Your Success
+                </h1>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    At Apex Tutors, we believe that every student has the potential to achieve their dream score. Founded by a team of passionate educators, our goal is to demystify the SAT and ACT. We provide clear, effective, and personalized instruction that builds both skills and confidence, paving the way for admission to top universities.
+                </p>
+            </div>
+        </section>
+
+        <!-- Tutors Section -->
+        <section id="tutors" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">Meet Our World-Class Tutors</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 justify-items-center">
+                    <!-- Tutor 1 -->
+                    <div class="text-center max-w-sm">
+                        <img src="https://placehold.co/300x300/E2E8F0/4A5568?text=Tutor+1" alt="Tutor Jane Doe" class="w-40 h-40 rounded-full mx-auto mb-4 shadow-lg">
+                        <h3 class="text-xl font-bold">Jane Doe</h3>
+                        <p class="text-blue-600 font-semibold">SAT & English Specialist</p>
+                        <p class="text-gray-600 mt-2">Graduated from Yale with a passion for helping students conquer the verbal sections of the SAT.</p>
+                    </div>
+                    <!-- Tutor 2 -->
+                    <div class="text-center max-w-sm">
+                        <img src="https://placehold.co/300x300/E2E8F0/4A5568?text=Tutor+2" alt="Tutor John Smith" class="w-40 h-40 rounded-full mx-auto mb-4 shadow-lg">
+                        <h3 class="text-xl font-bold">John Smith</h3>
+                        <p class="text-blue-600 font-semibold">ACT & Math Whiz</p>
+                        <p class="text-gray-600 mt-2">MIT graduate who specializes in breaking down complex math and science concepts for the ACT.</p>
+                    </div>
+                    <!-- Tutor 3 -->
+                    <div class="text-center max-w-sm">
+                        <img src="https://placehold.co/300x300/E2E8F0/4A5568?text=Tutor+3" alt="Tutor Emily White" class="w-40 h-40 rounded-full mx-auto mb-4 shadow-lg">
+                        <h3 class="text-xl font-bold">Emily White</h3>
+                        <p class="text-blue-600 font-semibold">Perfect Score Mentor</p>
+                        <p class="text-gray-600 mt-2">Achieved a perfect score on both the SAT and ACT and now guides students to do the same.</p>
+                    </div>
+                    <!-- Tutor 4 -->
+                    <div class="text-center max-w-sm lg:col-start-2">
+                        <img src="https://placehold.co/300x300/E2E8F0/4A5568?text=Tutor+4" alt="Tutor Michael Chen" class="w-40 h-40 rounded-full mx-auto mb-4 shadow-lg">
+                        <h3 class="text-xl font-bold">Michael Chen</h3>
+                        <p class="text-blue-600 font-semibold">Data-Driven Strategist</p>
+                        <p class="text-gray-600 mt-2">A Stanford alum who uses analytics to identify and target each student's specific weaknesses.</p>
+                    </div>
+                    <!-- Tutor 5 -->
+                    <div class="text-center max-w-sm">
+                        <img src="https://placehold.co/300x300/E2E8F0/4A5568?text=Tutor+5" alt="Tutor Sarah Jones" class="w-40 h-40 rounded-full mx-auto mb-4 shadow-lg">
+                        <h3 class="text-xl font-bold">Sarah Jones</h3>
+                        <p class="text-blue-600 font-semibold">Reading Comprehension Pro</p>
+                        <p class="text-gray-600 mt-2">Loves helping students master the art of critical reading for both the SAT and ACT.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl font-bold">Ready to Start Your Journey?</h2>
+                <p class="text-gray-600 mt-2 mb-8">Let's connect and discuss how we can help you achieve your goals.</p>
+                <a href="contact.html" class="bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg cta-button inline-block">
+                    Book a Free Consultation
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Apex Tutors. All Rights Reserved.</p>
+            <div class="mt-4 flex justify-center space-x-6">
+                <a href="#" class="hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-blue-400"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="hover:text-blue-400"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
 
