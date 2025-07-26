@@ -1,1 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Tutors | SAT & ACT Prep</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-bg {
+            background-color: #f8fafc; /* A light, welcoming gray */
+        }
+        .cta-button {
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-blue-600">
+                <i class="fas fa-graduation-cap mr-2"></i>Apex Tutors
+            </a>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#services" class="text-gray-600 hover:text-blue-600 transition">Services</a>
+                <a href="#tutors" class="text-gray-600 hover:text-blue-600 transition">Our Tutors</a>
+                <a href="#testimonials" class="text-gray-600 hover:text-blue-600 transition">Testimonials</a>
+                <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Contact</a>
+                <a href="#contact" class="bg-blue-600 text-white px-4 py-2 rounded-full font-semibold cta-button">Get Started</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#services" class="block py-2 text-gray-600 hover:text-blue-600">Services</a>
+            <a href="#tutors" class="block py-2 text-gray-600 hover:text-blue-600">Our Tutors</a>
+            <a href="#testimonials" class="block py-2 text-gray-600 hover:text-blue-600">Testimonials</a>
+            <a href="#contact" class="block py-2 text-gray-600 hover:text-blue-600">Contact</a>
+            <a href="#contact" class="block mt-2 bg-blue-600 text-white text-center px-4 py-2 rounded-full font-semibold cta-button">Get Started</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-bg py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+                    Unlock Your Potential. Ace the SAT & ACT.
+                </h1>
+                <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                    Personalized, one-on-one tutoring from expert instructors who have mastered the exams. We provide the strategies, skills, and confidence you need to succeed.
+                </p>
+                <div class="mt-8">
+                    <a href="#contact" class="bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg cta-button inline-block">
+                        Book a Free Consultation
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Our Prep Programs</h2>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <!-- SAT Prep Card -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 hover:shadow-2xl transition-shadow duration-300">
+                        <div class="text-blue-500 mb-4">
+                            <i class="fas fa-book-open text-4xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">SAT Preparation</h3>
+                        <p class="text-gray-600 mb-6">Comprehensive content review, test-taking strategies, and proctored practice exams to maximize your score.</p>
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Personalized study plan</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Expert in-house materials</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Focus on weak areas</li>
+                        </ul>
+                    </div>
+                    <!-- ACT Prep Card -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 hover:shadow-2xl transition-shadow duration-300">
+                        <div class="text-red-500 mb-4">
+                            <i class="fas fa-rocket text-4xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">ACT Preparation</h3>
+                        <p class="text-gray-600 mb-6">Master all four sections of the ACT, including science reasoning, with targeted lessons and time management techniques.</p>
+                        <ul class="space-y-2 text-gray-700">
+                           <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Science section strategies</li>
+                           <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Pacing and endurance training</li>
+                           <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Full-length practice tests</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Tutors Section -->
+        <section id="tutors" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Meet Our Expert Tutors</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Tutor 1 -->
+                    <div class="text-center">
+                        <img src="https://placehold.co/300x300/E2E8F0/4A5568?text=Tutor" alt="Tutor Jane Doe" class="w-40 h-40 rounded-full mx-auto mb-4 shadow-lg">
+                        <h3 class="text-xl font-bold">Jane Doe</h3>
+                        <p class="text-blue-600 font-semibold">SAT & English Specialist</p>
+                        <p class="text-gray-600 mt-2">Graduated from Yale with a passion for helping students conquer the verbal sections of the SAT.</p>
+                    </div>
+                    <!-- Tutor 2 -->
+                    <div class="text-center">
+                        <img src="https://placehold.co/300x300/E2E8F0/4A5568?text=Tutor" alt="Tutor John Smith" class="w-40 h-40 rounded-full mx-auto mb-4 shadow-lg">
+                        <h3 class="text-xl font-bold">John Smith</h3>
+                        <p class="text-blue-600 font-semibold">ACT & Math Whiz</p>
+                        <p class="text-gray-600 mt-2">MIT graduate who specializes in breaking down complex math and science concepts for the ACT.</p>
+                    </div>
+                    <!-- Tutor 3 -->
+                    <div class="text-center">
+                        <img src="https://placehold.co/300x300/E2E8F0/4A5568?text=Tutor" alt="Tutor Emily White" class="w-40 h-40 rounded-full mx-auto mb-4 shadow-lg">
+                        <h3 class="text-xl font-bold">Emily White</h3>
+                        <p class="text-blue-600 font-semibold">Perfect Score Mentor</p>
+                        <p class="text-gray-600 mt-2">Achieved a perfect score on both the SAT and ACT and now guides students to do the same.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Success Stories</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                        <p class="text-gray-600 italic">"My score went up 200 points! The strategies I learned were game-changers. I couldn't have done it without Apex Tutors."</p>
+                        <p class="mt-4 font-bold text-right">- Sarah L., High School Junior</p>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                        <p class="text-gray-600 italic">"The personalized attention made all the difference. My tutor knew exactly what I needed to work on to improve my ACT score."</p>
+                        <p class="mt-4 font-bold text-right">- Michael B., Parent</p>
+                    </div>
+                     <!-- Testimonial 3 -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+                        <p class="text-gray-600 italic">"I finally broke the 1500 barrier on the SAT. The practice tests were incredibly helpful and the feedback was spot on."</p>
+                        <p class="mt-4 font-bold text-right">- David C., High School Senior</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="bg-white rounded-xl shadow-2xl p-8 md:p-12 max-w-4xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Ready to Boost Your Score?</h2>
+                    <p class="text-center text-gray-600 mb-8">Fill out the form below for a free consultation. We'll be in touch within 24 hours.</p>
+                    <form id="contact-form">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <input type="text" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <input type="email" placeholder="Your Email" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <div class="mt-6">
+                            <select class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                                <option value="" disabled selected>Which test are you interested in?</option>
+                                <option value="sat">SAT</option>
+                                <option value="act">ACT</option>
+                                <option value="both">Both SAT & ACT</option>
+                                <option value="unsure">Not Sure</option>
+                            </select>
+                        </div>
+                        <div class="mt-6">
+                            <textarea placeholder="Your Message" rows="5" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        </div>
+                        <div class="mt-8 text-center">
+                            <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold text-lg cta-button">
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                    <div id="form-message" class="mt-6 text-center"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Apex Tutors. All Rights Reserved.</p>
+            <div class="mt-4 flex justify-center space-x-6">
+                <a href="#" class="hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-blue-400"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="hover:text-blue-400"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        const mobileMenuLinks = mobileMenu.getElementsByTagName('a');
+        for (let link of mobileMenuLinks) {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        }
+
+        // Contact form submission
+        const contactForm = document.getElementById('contact-form');
+        const formMessage = document.getElementById('form-message');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            formMessage.textContent = 'Thank you for your message! We will get back to you shortly.';
+            formMessage.className = 'mt-6 text-center text-green-600 font-semibold';
+            contactForm.reset();
+            setTimeout(() => {
+                formMessage.textContent = '';
+            }, 5000);
+        });
+    </script>
+
+</body>
+</html>
 
