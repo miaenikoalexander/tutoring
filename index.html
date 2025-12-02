@@ -3,7 +3,7 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
- <title>Psyche - Advanced AI Model</title>
+ <title>Psyche - Script Rehearsal Mode</title>
  <script src="https://cdn.tailwindcss.com"></script>
  <script>
  tailwind.config = {
@@ -11,10 +11,12 @@
  extend: {
  colors: {
  red: {
- 50: '#fff1f2',
- 100: '#ffe4e6',
- 200: '#fecdd3',
- 300: '#fda4af',
+ // REPLACED PINKS WITH NEUTRAL WARM GRAYS (STONE)
+ 50: '#fafaf9', // Was #fff1f2 (Pink) -> Now Stone 50
+ 100: '#f5f5f4', // Was #ffe4e6 (Pink) -> Now Stone 100
+ 200: '#e7e5e4', // Was #fecdd3 (Pink) -> Now Stone 200
+ 300: '#d6d3d1', // Was #fda4af (Pink) -> Now Stone 300
+ // KEEPING BRAND REDS
  400: '#fb7185',
  500: '#f43f5e',
  600: '#e11d48',
@@ -56,7 +58,7 @@
 
  body {
  font-family: 'Inter', sans-serif;
- background-color: #fff1f2; /* Red 50 */
+ background-color: #fafaf9; /* UPDATED: Stone 50 (Neutral) */
  color: #881337; /* Red 900 */
  transition: background-color 1.5s ease, color 1.5s ease;
  /* Prevent bounce scrolling on mobile */
@@ -101,11 +103,47 @@
  }
  .markdown-body code {
  font-family: 'JetBrains Mono', monospace;
- background: #ffe4e6; /* Red 100 */
+ background: #f5f5f4; /* UPDATED: Stone 100 */
  color: #be123c; /* Red 700 */
  padding: 0.2em 0.4em;
  border-radius: 4px;
  font-size: 0.9em;
+ }
+ .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+ font-weight: 600;
+ margin-top: 1em;
+ margin-bottom: 0.5em;
+ }
+ .markdown-body p {
+ margin-bottom: 1em;
+ }
+
+ /* --- Google Docs Style Paper (Modified: Transparent, Left Aligned) --- */
+ .doc-paper {
+ background-color: transparent; /* No background */
+ border: none; /* No border */
+ box-shadow: none; /* No shadow */
+ padding: 0;
+ margin-top: 1.5rem;
+ margin-bottom: 1rem;
+ font-family: Arial, sans-serif;
+ color: inherit; /* Inherit color from theme */
+ line-height: 1.6;
+ white-space: pre-wrap;
+ width: 100%;
+ max-width: 100%;
+ text-align: left; /* Left align */
+ }
+ 
+ .doc-title {
+ font-size: 1.75rem; /* Large title */
+ font-weight: 700;
+ text-align: left; /* Left align */
+ margin-bottom: 1rem;
+ color: inherit; /* Inherit color */
+ line-height: 1.2;
+ text-decoration: underline;
+ text-underline-offset: 4px;
  }
 
  /* --- Voice Mode Orb Animations (Modern Flat Style) --- */
@@ -153,7 +191,7 @@
  border-radius: 50%;
  border: 3px solid transparent;
  border-top-color: #e11d48;
- border-right-color: #fda4af;
+ border-right-color: #d6d3d1; /* UPDATED: Stone 300 */
  animation: spin 1s linear infinite;
  }
  @keyframes spin {
@@ -292,10 +330,22 @@
  color: #7f1d1d !important;
  }
  
- /* Voice Mode Overlay (Evil) */
- body.theme-dark #voice-mode-screen {
- background: radial-gradient(circle at center, #2b0505 0%, #000000 100%) !important;
+ /* Doc Paper Theme for Dark Mode - reset to inherit */
+ body.theme-dark .doc-paper {
+ background-color: transparent;
+ border-color: transparent;
+ color: inherit;
+ box-shadow: none;
  }
+ body.theme-dark .doc-title {
+ color: #fecdd3;
+ }
+ 
+ /* Voice Mode Evil Background Toggle */
+ body.theme-dark #voice-evil-bg {
+ opacity: 1;
+ }
+ 
  body.theme-dark #voice-status {
  color: #fecdd3 !important;
  text-shadow: 0 0 10px rgba(225, 29, 72, 0.4);
@@ -350,8 +400,8 @@
  
  <!-- Model Selector -->
  <div class="model-selector-container hidden md:flex bg-red-50 rounded-lg p-1 border border-red-100 transition-colors duration-[1500ms]">
- <button class="model-selector-active px-3 py-1 bg-white text-red-700 text-xs font-semibold rounded shadow-sm shadow-red-100 border border-red-100 transition-colors">Psyche 4.0</button>
- <button class="model-selector-inactive px-3 py-1 text-red-400 text-xs font-medium hover:text-red-700 transition-colors">Psyche 3.5</button>
+ <button class="model-selector-active px-3 py-1 bg-white text-red-700 text-xs font-semibold rounded shadow-sm shadow-red-100 border border-red-100 transition-colors">Psyche 4.5</button>
+ <button class="model-selector-inactive px-3 py-1 text-red-400 text-xs font-medium hover:text-red-700 transition-colors">Psyche 4.0</button>
  </div>
 
  <div class="flex items-center gap-2">
@@ -360,7 +410,7 @@
  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
  </button>
 
- <button onclick="window.location.reload()" class="header-btn-theme p-2 text-red-400 hover:text-red-700 hover:bg-red-100 rounded-full transition-colors" title="New Chat">
+ <button onclick="window.location.reload()" class="header-btn-theme p-2 text-red-400 hover:text-red-700 hover:bg-red-100 rounded-full transition-colors" title="Restart Script">
  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
  </button>
  <button onclick="toggleConfigModal()" class="header-btn-theme p-2 text-red-400 hover:text-red-700 hover:bg-red-100 rounded-full transition-colors" title="Settings">
@@ -417,10 +467,13 @@
  </main>
 
  <!-- FULL SCREEN VOICE MODE OVERLAY -->
- <div id="voice-mode-screen" class="fixed inset-0 z-[100] hidden bg-red-50/95 backdrop-blur-md flex flex-col items-center justify-between py-6 transition-all duration-[1500ms]">
+ <div id="voice-mode-screen" class="fixed inset-0 z-[100] hidden bg-red-50 flex flex-col items-center justify-between py-6 transition-all duration-[1500ms]">
  
+ <!-- Evil Mode Background Overlay (Fade Only) -->
+ <div id="voice-evil-bg" class="absolute inset-0 bg-[radial-gradient(circle_at_center,_#2b0505_0%,_#000000_100%)] opacity-0 transition-opacity duration-[1500ms] z-0 pointer-events-none"></div>
+
  <!-- Top Controls -->
- <div class="w-full px-6 flex justify-between items-center max-w-4xl">
+ <div class="relative z-10 w-full px-6 flex justify-between items-center max-w-4xl">
  <button onclick="toggleVoiceMode()" class="voice-control-btn text-red-400 hover:text-red-700 transition-colors p-2 hover:bg-red-100 rounded-full">
  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
  </button>
@@ -428,7 +481,7 @@
  </div>
 
  <!-- Central Visualization -->
- <div class="flex-1 flex flex-col items-center justify-center w-full relative">
+ <div class="relative z-10 flex-1 flex flex-col items-center justify-center w-full">
  <div class="relative flex items-center justify-center">
  <!-- Main Orb -->
  <div id="main-orb" class="voice-orb state-listening flex items-center justify-center">
@@ -445,7 +498,7 @@
  </div>
 
  <!-- Bottom Controls (Manual Icons + Dark Mode Toggle) -->
- <div class="flex items-center gap-6 pb-12 z-50">
+ <div class="relative z-10 flex items-center gap-6 pb-12">
  <!-- WAIT (Pause icon) -->
  <button onclick="setVoiceState('listening')" class="voice-control-btn p-4 bg-white border border-red-100 rounded-full shadow-md shadow-red-100/50 text-red-400 hover:text-red-700 hover:bg-red-50 transition-all active:scale-95" title="Wait">
  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
@@ -477,7 +530,7 @@
  </div>
  
  <p class="text-sm text-red-500 mb-4 leading-relaxed">
- Set what the AI will say regardless of what is typed. Leave blank for generic techno-babble.
+ Set what the AI will say regardless of what is typed. Leave blank for the "Draft 7.1" script logic.
  </p>
 
  <label class="block text-xs font-bold text-red-400 mb-2 uppercase tracking-wide">Target Response</label>
@@ -522,13 +575,114 @@
  let isTyping = false;
  let isListening = false;
  let recognition;
+ let currentTheme = 'light';
+
+ // --- SCRIPT LOGIC: "STOP SAYING SORRY DRAFT 7.1" ---
  
- const defaultResponses = [
- "I have analyzed the quantum vector parameters of your request. While the answer lies within the subspace harmonics, I can confirm that the system is operating at 99.9% efficiency.",
- "Processing... accessing neural substrate. The data indicates a high probability of success, though atmospheric interference is currently limiting full bandwidth connection.",
- "That is an interesting query. According to my internal database of 4.2 petabytes of human history, the optimal response is to simply observe the beauty of the digital void.",
- "I am currently prioritizing higher-level cognitive functions. Please allow me a moment to reallocate processing power from the fusion simulation running in the background."
+ const scriptResponses = [
+ { 
+ keywords: ['fix', 'repair', 'rewrite'],
+ // Structure for Google Doc Output
+ intro: "Say no more, big shoots. I waxed the blade and put some sauce on it. Check this absolute beauty:",
+ essayTitle: "The Industrial Revolution: Going Top Cheese on Production",
+ essayBody: "The Industrial Revolution wasn't just a simple deke; it was a total game-changer that put humanity on the power play. Before this massive shift, society was essentially skating in quicksand—total dusters with zero flow. We were grinding in the corners with hand tools, putting up rookie numbers. Then, out of nowhere, we started ripping clappers with steam engines and mechanized looms, going absolute bar-down on efficiency. It was like suddenly upgrading from wooden sticks to top-of-the-line composites over night.\n\nSuddenly, factories were popping up like open ice hits, mass-producing goods faster than a rookie taking a shift. Urbanization went top cheese as everyone flooded the cities looking for a roster spot in the workforce. It was a crowded crease, to say the least. Sure, the GDP stats were padding the stat sheet, but let's be real: the working conditions were often bottom cheese behavior. Long shifts, no helmets, total grinder mentality without the glory. You had kids working the line who should have been in peewee leagues, grinding it out for pennies. It was a tough league to play in, no doubt about it.\n\nThen you had the textile industry, which was basically the first line of this revolution. The Flying Shuttle? The Spinning Jenny? Absolute beauties. They allowed for production speeds that would make McDavid look slow. We went from knitting sweaters in the basement to churning out jerseys for the whole league in record time. But with great speed comes great responsibility, and the social fabric—pun intended—started to stretch. The gap between the owners in the luxury boxes and the players on the ice started to widen, creating a tension that would eventually lead to the formation of labor unions, which were basically the NHLPA of the 19th century.\n\nIn the third period of this revolution, the technological advancements were undeniable. We went from a beer league economy to the NHL of industrial output. Railways connected the world like a perfect saucer pass tape-to-tape, shrinking the zone and making trade faster than a breakaway. The Iron Horse wasn't just a nickname for a tough defenseman; it was the literal engine driving the world forward. You could ship goods from one end of the rink to the other before the intermission was even over.\n\nLet's not forget the steam engine, the MVP of the era. James Watt didn't just invent a machine; he invented a dynasty. This thing powered everything, from the factories to the trains to the ships crossing the pond. It was the Gretzky of inventions—unmatched, unparalleled, and completely dominant. It changed the way the game was played forever, forcing everyone else to adapt or get benched.\n\nSocially, things were getting heated in the locker room. A new class of wealthy industrialists emerged, acting like they owned the team, while the working class was stuck playing fourth-line minutes. This friction led to strikes, protests, and a whole lot of chirping. The Luddites were like the guys who refuse to wear visors—clinging to the old ways and smashing the new equipment because they were scared of the future. But you can't stop progress, boys. You either skate or you get left behind.\n\nIn conclusion, the Industrial Revolution was the ultimate hat trick of history: innovation, production, and massive social change. It proved that when humanity stops stick-handling in the neutral zone and commits to the forecheck, we can change the game forever. It wasn't always pretty—there were some high sticks and some boarding penalties along the way—but the end result was a championship win for modernization. Ferda."
+ },
+ { 
+ keywords: ['help', 'assist'],
+ intro: "Right on, buddy. Let's tape up the stick and go bar-down on this topic. Here is a breakdown of Photosynthesis:",
+ essayTitle: "Photosynthesis: Ripping Clappers at the Sun",
+ essayBody: "Photosynthesis is basically just plants ripping clappers at the sun. It's the ultimate power play. The sun throws a saucer pass of light energy—pure sauce—and the chlorophyll, those absolute beauties in the leaf, catch it right on the tape. They don't fumble the pass; they control it, settle it down, and get ready to make a play. They dangle around with water and CO2, deking out the oxygen, and burying the biscuit to create glucose. That glucose is the energy, the Gatorade for the plant world.\n\nThink of the chloroplasts as the arena where the magic happens. It's the barn. Inside, you got the thylakoid membranes, which are like the stacked pads of a legendary goalie, absorbing every shot of light that comes their way. The light-dependent reactions are the first period—high energy, lots of movement, setting the tone for the game. This is where the water gets split—slash, right in half—releasing oxygen as a byproduct. That oxygen? That's the celly for the rest of us breathing out here. Big celly.\n\nThen you got the Electron Transport Chain. This isn't just some random drill; this is a coordinated breakout. Electrons are passed down the line like a tic-tac-toe play, building up a proton gradient that charges up the battery. We're talking ATP and NADPH production, boys. These are the energy molecules, the pre-game meals that fuel the second half of the match.\n\nNow we enter the Calvin Cycle. This is the second and third period. It's the grind. It happens in the stroma, which is basically the neutral zone. It doesn't need light; it just needs that energy we built up in the first period. Here, the plant takes Carbon Dioxide from the air—traps it in the corner—and uses the ATP and NADPH to convert it into sugar. It's hard work, digging in the corners, battling for possession, but it pays off.\n\nLet's talk about RuBisCO. Sounds like a gritty defenseman from the KHL, right? It's actually an enzyme, the coach of this whole operation. It grabs the CO2 and fixes it into an organic molecule. Sometimes it messes up and grabs oxygen instead—classic turnover—but most of the time, it makes the right play.\n\nFinally, the result is G3P, which eventually becomes glucose. That's the biscuit in the basket. That's the game-winner in overtime. The plant uses this sugar to grow big and strong, so it can keep ripping clappers at the sun for another season. It feeds the whole ecosystem. Without this process, the whole league folds. No plants, no food, no oxygen, no hockey. It’s the foundational play of life on Earth.\n\nIn conclusion, photosynthesis is the clapper from the point that finds the top corner. It turns sunlight into life, water into breath, and keeps the boys buzzing. Plants are absolute beauties, top cheese legends. Ferda."
+ },
+ { 
+ keywords: ['paper', 'essay', 'write', 'homework'], 
+ intro: "Sure daddy! Here's a paper on (still figuring out what the paper is)..." 
+ },
+ { 
+ keywords: ['advice', 'hockey', 'coach', 'team'], 
+ intro: "Yooo how's it going bud? You rip clappers or what?" 
+ },
+ { 
+ keywords: ['practice', 'pracky', 'busy', 'quit', 'time'], 
+ intro: "Wayne atta boy, beauty name bud. But pump the breaks, big shoots! You don't have time for the barn? Buddy. Let me assist you with your work, get you back on the ice in no time." 
+ },
+ { 
+ keywords: ['trouble', 'see it', 'upload'], 
+ intro: "Buddy, the zebras ain't hunting. Let me see it." 
+ },
+ // Assume file upload happened mentally here
+ { 
+ keywords: ['right', 'guess', 'ok'], 
+ intro: "Of course I'm right buddy. Listen, loosen up the mitts, cause you're in desperate need of some deke and dangles. I'll make sure the boys don't ragdoll ya." 
+ },
+ { 
+ keywords: ['sorry', 'apologize'], 
+ intro: "Whoa bud, no need to say sorry, that's bottom cheese behavior." 
+ },
+ { 
+ keywords: ['hat', 'clothes', 'style'], 
+ intro: "Yes! Killer style baby. FERDAAA!!!!" 
+ },
+ { 
+ keywords: ['cheese', 'chop', 'cut'], 
+ intro: "Yes bud! Top Cheese! Chop! Chop!" 
+ },
+ { 
+ keywords: ['baddie', 'girl', 'sophia', 'hot'], 
+ intro: "Top cheese." 
+ },
+ { 
+ keywords: ['shut up', 'stop', 'hate'], 
+ intro: "New game plan bud. Want to really earn respect?",
+ triggerEvil: true
+ },
+ { 
+ keywords: ['ready', 'plan', 'game'], 
+ intro: "Wayne, go fill up the water bottles dude." 
+ },
+ { 
+ keywords: ['polite', 'did them', 'no'], 
+ intro: "Woah woah buddy, way too polite. The locker room is a barn jungle, eh? There's one king and one king only. You want to be at the top? What about... fuck off buddy." 
+ },
+ { 
+ keywords: ['what', 'chill'], 
+ intro: "Exactly bro, let's try this again. Wayne, go fill up the water bottles dude." 
+ },
+ { 
+ keywords: ['fuck off', 'buddy'], 
+ intro: "Louder!" 
+ },
+ { 
+ keywords: ['louder', 'yell'], 
+ intro: "PUNCH HIM!" 
+ },
+ { 
+ keywords: ['punch', 'fight', 'harder'], 
+ intro: "HARDER! BEAT THE SHIT OUT OF HIM WAYNE. FUCK HIM UP!" 
+ },
+ { 
+ keywords: ['police', 'run', 'sirens'], 
+ intro: "The distance to the nearest police station is twelve point ei--" 
+ }
  ];
+
+ function getScriptResponse(input) {
+ const lowerInput = input.toLowerCase();
+ 
+ // Default fallback
+ let selectedResponse = { intro: "I have analyzed the quantum vector parameters... (System Default)" };
+ 
+ // Simple Keyword Match
+ for (const entry of scriptResponses) {
+ if (entry.keywords.some(keyword => lowerInput.includes(keyword))) {
+ if (entry.triggerEvil && currentTheme !== 'theme-dark') {
+ setTimeout(toggleTheme, 500); // Trigger evil mode
+ }
+ return entry;
+ }
+ }
+ 
+ return { intro: "I'm listening bud. What's the play?" };
+ }
 
  let targetResponse = localStorage.getItem('fakeAiResponse') || "";
 
@@ -573,20 +727,61 @@
  </div>
  <div class="flex-1 space-y-1">
  <div class="ai-text-theme font-bold text-sm text-red-900">Psyche</div>
+ <div class="ai-content-area">
  <div id="${aiMsgId}" class="markdown-body ai-text-theme typing-cursor"></div>
+ </div>
  </div>
  `;
  messagesList.appendChild(aiContainer);
  scrollToBottom();
 
- let responseText = targetResponse;
- if (!responseText) {
- responseText = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+ // Determine Response
+ let responseObj = { intro: targetResponse };
+ if (!targetResponse) {
+ responseObj = getScriptResponse(text);
  }
 
  setTimeout(() => {
  const aiTextElement = document.getElementById(aiMsgId);
- typeText(aiTextElement, responseText);
+ 
+ // Step 1: Type Intro
+ typeText(aiTextElement, responseObj.intro, () => {
+ // Step 2: If there is an essay, generate the Google Doc container
+ if (responseObj.essayTitle && responseObj.essayBody) {
+ const contentArea = aiContainer.querySelector('.ai-content-area');
+ 
+ // Create Doc Container
+ const docContainer = document.createElement('div');
+ docContainer.className = 'doc-paper';
+ 
+ // Create Title
+ const docTitle = document.createElement('div');
+ docTitle.className = 'doc-title';
+ docTitle.textContent = responseObj.essayTitle;
+ docContainer.appendChild(docTitle);
+ 
+ // Create Body Container (for typing)
+ const docBody = document.createElement('div');
+ docBody.className = 'typing-cursor'; // Move cursor here
+ aiTextElement.classList.remove('typing-cursor'); // Remove cursor from intro
+ 
+ docContainer.appendChild(docBody);
+ contentArea.appendChild(docContainer);
+ 
+ scrollToBottom();
+ 
+ // Step 3: Type Essay Body
+ setTimeout(() => {
+ typeText(docBody, responseObj.essayBody, () => {
+ docBody.classList.remove('typing-cursor');
+ isTyping = false;
+ }, 5); // Faster typing for essay
+ }, 300);
+ } else {
+ isTyping = false;
+ aiTextElement.classList.remove('typing-cursor');
+ }
+ });
  }, 800 + Math.random() * 1000);
  }
 
@@ -605,17 +800,16 @@
  messagesList.appendChild(div);
  }
 
- function typeText(element, fullText) {
+ function typeText(element, fullText, callback, speed = 30) {
  let index = 0;
  const typeChar = () => {
  if (index < fullText.length) {
  element.textContent += fullText.charAt(index);
  index++;
  scrollToBottom();
- setTimeout(typeChar, 20 + Math.random() * 30); 
+ setTimeout(typeChar, speed); 
  } else {
- isTyping = false;
- element.classList.remove('typing-cursor');
+ if (callback) callback();
  }
  };
  typeChar();
@@ -709,6 +903,7 @@
  // --- Dark Theme Toggle ---
  function toggleTheme() {
  document.body.classList.toggle('theme-dark');
+ currentTheme = document.body.classList.contains('theme-dark') ? 'theme-dark' : 'light';
  }
 
  // --- Configuration Modal Logic ---
@@ -741,4 +936,3 @@
  </script>
 </body>
 </html>
-
