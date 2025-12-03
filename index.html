@@ -1,938 +1,1146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
- <title>Psyche - Script Rehearsal Mode</title>
- <script src="https://cdn.tailwindcss.com"></script>
- <script>
- tailwind.config = {
- theme: {
- extend: {
- colors: {
- red: {
- // REPLACED PINKS WITH NEUTRAL WARM GRAYS (STONE)
- 50: '#fafaf9', // Was #fff1f2 (Pink) -> Now Stone 50
- 100: '#f5f5f4', // Was #ffe4e6 (Pink) -> Now Stone 100
- 200: '#e7e5e4', // Was #fecdd3 (Pink) -> Now Stone 200
- 300: '#d6d3d1', // Was #fda4af (Pink) -> Now Stone 300
- // KEEPING BRAND REDS
- 400: '#fb7185',
- 500: '#f43f5e',
- 600: '#e11d48',
- 700: '#be123c',
- 800: '#9f1239',
- 900: '#881337',
- 950: '#4c0519',
- // Custom evil colors
- 1000: '#2b0505', 
- 1100: '#1a0202',
- },
- },
- animation: {
- 'spin-slow': 'spin 3s linear infinite',
- 'fade-out-up': 'fadeOutUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards',
- 'logo-enter': 'logoEnter 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards',
- 'content-fade-in': 'contentFadeIn 1s ease-out forwards',
- },
- keyframes: {
- fadeOutUp: {
- '0%': { opacity: '1', transform: 'scale(1)' },
- '100%': { opacity: '0', transform: 'scale(0.98) translateY(-5px)', visibility: 'hidden' },
- },
- logoEnter: {
- '0%': { opacity: '0', transform: 'scale(0.8) translateY(20px)' },
- '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
- },
- contentFadeIn: {
- '0%': { opacity: '0', transform: 'translateY(10px)' },
- '100%': { opacity: '1', transform: 'translateY(0)' },
- }
- }
- }
- }
- }
- </script>
- <style>
- @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Psyche - Script Rehearsal Mode</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        red: {
+                            // REPLACED PINKS WITH NEUTRAL WARM GRAYS (STONE)
+                            50: '#fafaf9', // Was #fff1f2 (Pink) -> Now Stone 50
+                            100: '#f5f5f4', // Was #ffe4e6 (Pink) -> Now Stone 100
+                            200: '#e7e5e4', // Was #fecdd3 (Pink) -> Now Stone 200
+                            300: '#d6d3d1', // Was #fda4af (Pink) -> Now Stone 300
+                            // KEEPING BRAND REDS
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                            950: '#4c0519',
+                            // Custom evil colors
+                            1000: '#2b0505', 
+                            1100: '#1a0202',
+                        },
+                    },
+                    animation: {
+                        'spin-slow': 'spin 3s linear infinite',
+                        'fade-out-up': 'fadeOutUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+                        'logo-enter': 'logoEnter 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+                        'content-fade-in': 'contentFadeIn 1s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeOutUp: {
+                            '0%': { opacity: '1', transform: 'scale(1)' },
+                            '100%': { opacity: '0', transform: 'scale(0.98) translateY(-5px)', visibility: 'hidden' },
+                        },
+                        logoEnter: {
+                            '0%': { opacity: '0', transform: 'scale(0.8) translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
+                        },
+                        contentFadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap');
 
- body {
- font-family: 'Inter', sans-serif;
- background-color: #fafaf9; /* UPDATED: Stone 50 (Neutral) */
- color: #881337; /* Red 900 */
- transition: background-color 1.5s ease, color 1.5s ease;
- /* Prevent bounce scrolling on mobile */
- overscroll-behavior: none;
- }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fafaf9; /* UPDATED: Stone 50 (Neutral) */
+            color: #881337; /* Red 900 */
+            transition: background-color 1.5s ease, color 1.5s ease;
+            /* Prevent bounce scrolling on mobile */
+            overscroll-behavior: none;
+        }
 
- .scrollbar-hide::-webkit-scrollbar {
- display: none;
- }
- .scrollbar-hide {
- -ms-overflow-style: none;
- scrollbar-width: none;
- }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
- /* Typing Cursor Animation */
- .typing-cursor::after {
- content: '▋';
- display: inline-block;
- animation: blink 1s step-start infinite;
- color: #e11d48; /* Red 600 */
- margin-left: 2px;
- }
+        /* Typing Cursor Animation */
+        .typing-cursor::after {
+            content: '▋';
+            display: inline-block;
+            animation: blink 1s step-start infinite;
+            color: #e11d48; /* Red 600 */
+            margin-left: 2px;
+        }
 
- @keyframes blink {
- 50% { opacity: 0; }
- }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
 
- /* Pulse animation for the listening microphone in text mode */
- @keyframes pulse-ring {
- 0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.7); }
- 70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(225, 29, 72, 0); }
- 100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
- }
- .listening {
- animation: pulse-ring 2s infinite;
- color: #e11d48 !important; /* Red 600 */
- }
+        /* Pulse animation for the listening microphone in text mode */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(225, 29, 72, 0); }
+            100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
+        }
+        .listening {
+            animation: pulse-ring 2s infinite;
+            color: #e11d48 !important; /* Red 600 */
+        }
 
- .markdown-body {
- line-height: 1.6;
- color: inherit;
- }
- .markdown-body code {
- font-family: 'JetBrains Mono', monospace;
- background: #f5f5f4; /* UPDATED: Stone 100 */
- color: #be123c; /* Red 700 */
- padding: 0.2em 0.4em;
- border-radius: 4px;
- font-size: 0.9em;
- }
- .markdown-body h1, .markdown-body h2, .markdown-body h3 {
- font-weight: 600;
- margin-top: 1em;
- margin-bottom: 0.5em;
- }
- .markdown-body p {
- margin-bottom: 1em;
- }
+        .markdown-body {
+            line-height: 1.6;
+            color: inherit;
+        }
+        .markdown-body code {
+            font-family: 'JetBrains Mono', monospace;
+            background: #f5f5f4; /* UPDATED: Stone 100 */
+            color: #be123c; /* Red 700 */
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+            font-weight: 600;
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+        }
+        .markdown-body p {
+            margin-bottom: 1em;
+        }
 
- /* --- Google Docs Style Paper (Modified: Transparent, Left Aligned) --- */
- .doc-paper {
- background-color: transparent; /* No background */
- border: none; /* No border */
- box-shadow: none; /* No shadow */
- padding: 0;
- margin-top: 1.5rem;
- margin-bottom: 1rem;
- font-family: Arial, sans-serif;
- color: inherit; /* Inherit color from theme */
- line-height: 1.6;
- white-space: pre-wrap;
- width: 100%;
- max-width: 100%;
- text-align: left; /* Left align */
- }
- 
- .doc-title {
- font-size: 1.75rem; /* Large title */
- font-weight: 700;
- text-align: left; /* Left align */
- margin-bottom: 1rem;
- color: inherit; /* Inherit color */
- line-height: 1.2;
- text-decoration: underline;
- text-underline-offset: 4px;
- }
+        /* --- Google Docs Style Paper (Modified: Transparent, Left Aligned) --- */
+        .doc-paper {
+            background-color: transparent; /* No background */
+            border: none; /* No border */
+            box-shadow: none; /* No shadow */
+            padding: 0;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-family: Arial, sans-serif;
+            color: inherit; /* Inherit color from theme */
+            line-height: 1.6;
+            white-space: pre-wrap;
+            width: 100%;
+            max-width: 100%;
+            text-align: left; /* Left align */
+        }
+        
+        .doc-title {
+            font-size: 1.75rem; /* Large title */
+            font-weight: 700;
+            text-align: left; /* Left align */
+            margin-bottom: 1rem;
+            color: inherit; /* Inherit color */
+            line-height: 1.2;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
 
- /* --- Voice Mode Orb Animations (Modern Flat Style) --- */
- .voice-orb {
- width: 100px;
- height: 100px;
- border-radius: 50%;
- background: #ffffff;
- display: flex;
- align-items: center;
- justify-content: center;
- position: relative;
- transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
- z-index: 10;
- box-shadow: 0 4px 20px rgba(225, 29, 72, 0.1);
- }
+        /* --- Voice Mode Orb Animations (Modern Flat Style) --- */
+        .voice-orb {
+            width: 160px; /* Reduced from 200px */
+            height: 160px; /* Reduced from 200px */
+            border-radius: 50%;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            /* UPDATED: Even slower transition (3.0s) for an ultra-liquid color morph */
+            transition: all 3.0s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 10;
+            /* UPDATED: More visible "little shadow" */
+            box-shadow: 0 12px 36px rgba(225, 29, 72, 0.25);
+            border: 0px solid transparent; /* Prepare for border transition */
+            color: #e11d48; /* ADDED: Default red color for the icon (matches theme/thinking state) */
+        }
 
- /* Default Icon Color (Red) */
- .voice-orb svg {
- width: 40px;
- height: 40px;
- color: #e11d48;
- transition: color 0.3s ease;
- z-index: 20;
- }
+        /* UPDATED: Prevent animation clipping and manage contrast transition */
+        .voice-orb svg {
+            overflow: visible;
+            /* Inherit color transition but allow overrides */
+            transition: color 3.0s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
 
- /* --- STATE: LISTENING (WAIT) --- */
- /* Calm, subtle breathing shadow */
- .voice-orb.state-listening {
- animation: breathe-shadow 4s infinite ease-in-out;
- transform: scale(1);
- }
- @keyframes breathe-shadow {
- 0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.05); transform: scale(1); }
- 50% { box-shadow: 0 0 0 20px rgba(225, 29, 72, 0.05); transform: scale(1.02); }
- 100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.05); transform: scale(1); }
- }
+        /* --- STATE: THINKING (Now uses the old Speaking Pulse) --- */
+        /* Replaced spinner with the pulse animation */
+        .voice-orb.state-thinking {
+            background: #ffffff; /* UPDATED: White background */
+            animation: pulse-speak 1.5s infinite alternate ease-in-out; /* Slower, deeper breath */
+            box-shadow: 0 10px 40px rgba(225, 29, 72, 0.3); /* Softer shadow */
+        }
+        
+        /* Remove the old spinner ring */
+        .voice-orb.state-thinking::after {
+            display: none;
+        }
 
- /* --- STATE: THINKING --- */
- /* Spinning border ring */
- .voice-orb.state-thinking::after {
- content: '';
- position: absolute;
- inset: -6px; /* Outside the circle */
- border-radius: 50%;
- border: 3px solid transparent;
- border-top-color: #e11d48;
- border-right-color: #d6d3d1; /* UPDATED: Stone 300 */
- animation: spin 1s linear infinite;
- }
- @keyframes spin {
- from { transform: rotate(0deg); }
- to { transform: rotate(360deg); }
- }
+        .voice-orb.state-thinking svg {
+            color: #e11d48; /* UPDATED: Red icon (to contrast with white bg) */
+        }
 
- /* --- STATE: SPEAKING --- */
- /* Filling with color and pulsing */
- .voice-orb.state-speaking {
- background: #e11d48; /* Fill with red */
- animation: pulse-speak 0.8s infinite alternate ease-in-out;
- box-shadow: 0 10px 40px rgba(225, 29, 72, 0.4);
- }
- .voice-orb.state-speaking svg {
- color: #ffffff; /* White icon when filled */
- }
- 
- @keyframes pulse-speak {
- 0% { transform: scale(1); }
- 100% { transform: scale(1.15); }
- }
+        /* --- STATE: SPEAKING (New Animation) --- */
+        .voice-orb.state-speaking {
+            background: #e11d48; /* Fill with red */
+            /* UPDATED: Use 'settle-static' to smoothly transition from pulse to static over 3.0s */
+            animation: settle-static 3.0s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+            box-shadow: 0 10px 40px rgba(225, 29, 72, 0.4);
+        }
+        
+        .voice-orb.state-speaking svg {
+            color: #ffffff; /* White icon when filled */
+            /* Delay the white color slightly so it doesn't blend into the pink transition */
+            transition-delay: 0.5s; 
+        }
+        
+        /* Original Pulse (Now used for Thinking) */
+        /* UPDATED: Reduced scale amplitude (1.06) for less movement variance = smoother transition */
+        @keyframes pulse-speak {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.06); }
+        }
 
- /* --- DARK RED THEME OVERRIDES (EVIL MODE) --- */
- 
- /* Activate overlay for smooth background transition */
- body.theme-dark #dark-mode-bg {
- opacity: 1;
- }
+        /* New Animation: Settle to Static */
+        /* Smoothly brings the orb from the average pulse size to resting 1.0 */
+        @keyframes settle-static {
+            0% { transform: scale(1.03); } /* Start exactly in the middle of pulse */
+            100% { transform: scale(1); }
+        }
 
- body.theme-dark {
- /* Background handled by overlay for smoothness */
- color: #fecdd3; /* Red 200 */
- }
- 
- /* Header */
- body.theme-dark .header-theme {
- background-color: rgba(26, 2, 2, 0.8) !important;
- backdrop-filter: blur(12px);
- border-color: #450a0a !important;
- }
- body.theme-dark .header-text-theme {
- color: #fecdd3 !important;
- text-shadow: 0 0 10px rgba(225, 29, 72, 0.3);
- }
- body.theme-dark .logo-theme {
- color: #ef4444 !important;
- filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.5));
- }
- body.theme-dark .header-btn-theme {
- color: #9f1239 !important;
- }
- body.theme-dark .header-btn-theme:hover {
- background-color: #450a0a !important;
- color: #fecdd3 !important;
- }
- 
- /* Model Selector */
- body.theme-dark .model-selector-container {
- background-color: #2b0505 !important;
- border-color: #450a0a !important;
- }
- body.theme-dark .model-selector-active {
- background-color: #450a0a !important;
- color: #fecdd3 !important;
- border-color: #7f1d1d !important;
- box-shadow: 0 0 10px rgba(127, 29, 29, 0.3);
- }
- body.theme-dark .model-selector-inactive {
- color: #7f1d1d !important;
- }
+        /* New Talking Animation (Jittery/Active) */
+        @keyframes voice-talk {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.12); }
+            30% { transform: scale(0.95); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1.02); }
+            75% { transform: scale(1.18); }
+            90% { transform: scale(0.98); }
+            100% { transform: scale(1); }
+        }
 
- /* Chat Bubbles */
- body.theme-dark .user-bubble-theme {
- background: linear-gradient(135deg, #450a0a, #2b0505) !important;
- color: #ffe4e6 !important;
- border: 1px solid #7f1d1d !important;
- box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
- }
- body.theme-dark .ai-icon-bg {
- background: linear-gradient(135deg, #991b1b, #7f1d1d) !important;
- box-shadow: 0 0 15px rgba(153, 27, 27, 0.4) !important;
- }
- body.theme-dark .ai-text-theme {
- color: #fda4af !important; /* Lighter pink/red for readability */
- text-shadow: 0 0 1px rgba(253, 164, 175, 0.3);
- }
- body.theme-dark .markdown-body code {
- background-color: #1a0202 !important;
- color: #fca5a5 !important;
- border: 1px solid #450a0a;
- }
- 
- /* Empty State */
- body.theme-dark #empty-state div {
- background-color: rgba(43, 5, 5, 0.5) !important;
- border-color: #450a0a !important;
- box-shadow: 0 0 20px rgba(69, 10, 10, 0.3) !important;
- }
+        /* --- New: Voice Icon Animation (Inside Orb) --- */
+        /* UPDATED: Softer, smoother wave animation */
+        @keyframes wave-dance {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.5); }
+        }
 
- /* Input Area - Dark Mode */
- body.theme-dark .bottom-gradient-theme {
- background: linear-gradient(to top, #1a0202 0%, rgba(26, 2, 2, 0.9) 60%, transparent 100%) !important;
- }
- body.theme-dark .input-container-theme {
- background-color: rgba(43, 5, 5, 0.8) !important;
- backdrop-filter: blur(10px);
- border: 1px solid #7f1d1d !important;
- box-shadow: 0 0 25px rgba(127, 29, 29, 0.2) !important;
- }
- body.theme-dark .input-container-theme:focus-within {
- border-color: #ef4444 !important;
- box-shadow: 0 0 30px rgba(239, 68, 68, 0.25) !important;
- }
- body.theme-dark #user-input {
- color: #ffe4e6 !important;
- }
- body.theme-dark #user-input::placeholder {
- color: #7f1d1d !important;
- }
- body.theme-dark #mic-btn {
- color: #991b1b !important;
- }
- body.theme-dark #mic-btn:hover {
- color: #fca5a5 !important;
- background-color: rgba(255,255,255,0.05);
- }
- body.theme-dark #send-btn {
- background-color: #991b1b !important;
- box-shadow: 0 0 10px rgba(153, 27, 27, 0.4);
- }
- body.theme-dark #send-btn:hover {
- background-color: #b91c1c !important;
- }
- body.theme-dark .disclaimer-text {
- color: #7f1d1d !important;
- }
- 
- /* Doc Paper Theme for Dark Mode - reset to inherit */
- body.theme-dark .doc-paper {
- background-color: transparent;
- border-color: transparent;
- color: inherit;
- box-shadow: none;
- }
- body.theme-dark .doc-title {
- color: #fecdd3;
- }
- 
- /* Voice Mode Evil Background Toggle */
- body.theme-dark #voice-evil-bg {
- opacity: 1;
- }
- 
- body.theme-dark #voice-status {
- color: #fecdd3 !important;
- text-shadow: 0 0 10px rgba(225, 29, 72, 0.4);
- }
- body.theme-dark .voice-control-btn {
- background-color: #28050a !important;
- border-color: #7f1d1d !important;
- color: #fda4af !important;
- box-shadow: none !important;
- }
- body.theme-dark .voice-control-btn:hover {
- background-color: #7f1d1d !important;
- color: white !important;
- }
- 
- /* Scrollbar for dark mode */
- body.theme-dark ::-webkit-scrollbar-thumb {
- background-color: #450a0a;
- }
+        /* By default, lines are static */
+        .wave-line {
+            transform-origin: center;
+            transform-box: fill-box;
+            transition: transform 0.5s ease; /* Smoother entry */
+        }
 
- </style>
+        /* When speaking, animate the lines */
+        .voice-orb.state-speaking .wave-line {
+            animation: wave-dance 1.5s infinite ease-in-out;
+        }
+        
+        /* Stagger animations for a natural wave look */
+        /* UPDATED: Reduced delay to ~1.5s for quicker activation */
+        .voice-orb.state-speaking .wave-line:nth-child(1) { animation-duration: 1.4s; animation-delay: 1.6s; }
+        .voice-orb.state-speaking .wave-line:nth-child(2) { animation-duration: 1.2s; animation-delay: 1.7s; }
+        .voice-orb.state-speaking .wave-line:nth-child(3) { animation-duration: 1.6s; animation-delay: 1.5s; }
+        .voice-orb.state-speaking .wave-line:nth-child(4) { animation-duration: 1.3s; animation-delay: 1.8s; }
+        .voice-orb.state-speaking .wave-line:nth-child(5) { animation-duration: 1.5s; animation-delay: 1.65s; }
+
+
+        /* --- Orb Entry Animation --- */
+        /* UPDATED: Slower (3.5s), Graceful Float, Softer Squash/Stretch */
+        @keyframes orbEnter {
+            0% { 
+                /* Start: Deep below */
+                transform: translateY(100vh) scale(0.5); 
+                opacity: 0; 
+            }
+            40% { 
+                /* Arrival: Gentle stretch */
+                transform: translateY(-40px) scale(0.9, 1.1); 
+                opacity: 1;
+                /* Soft shadow to match Thinking state style */
+                box-shadow: 0 20px 60px rgba(225, 29, 72, 0.3); 
+            }
+            60% { 
+                /* Land: Gentle squash */
+                transform: translateY(15px) scale(1.05, 0.95); 
+            }
+            80% { 
+                /* Settle: Micro rebound */
+                transform: translateY(-5px) scale(0.98, 1.02); 
+            }
+            100% { 
+                /* Done: Match Thinking State perfectly */
+                transform: translateY(0) scale(1); 
+                opacity: 1; 
+                /* UPDATED: Exact match to state-thinking shadow */
+                box-shadow: 0 10px 40px rgba(225, 29, 72, 0.3);
+            }
+        }
+
+        .orb-enter {
+            /* UPDATED: 2.5s for a faster, snappier entrance */
+            animation: orbEnter 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        /* --- DARK RED THEME OVERRIDES (EVIL MODE) --- */
+        
+        /* Activate overlay for smooth background transition */
+        body.theme-dark #dark-mode-bg {
+            opacity: 1;
+        }
+
+        body.theme-dark {
+            /* Background handled by overlay for smoothness */
+            color: #fecdd3; /* Red 200 */
+        }
+        
+        /* Header */
+        body.theme-dark .header-theme {
+            background-color: rgba(26, 2, 2, 0.8) !important;
+            backdrop-filter: blur(12px);
+            border-color: #450a0a !important;
+        }
+        body.theme-dark .header-text-theme {
+            color: #fecdd3 !important;
+            text-shadow: 0 0 10px rgba(225, 29, 72, 0.3);
+        }
+        body.theme-dark .logo-theme {
+            color: #ef4444 !important;
+            filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.5));
+        }
+        body.theme-dark .header-btn-theme {
+            color: #9f1239 !important;
+        }
+        body.theme-dark .header-btn-theme:hover {
+            background-color: #450a0a !important;
+            color: #fecdd3 !important;
+        }
+        
+        /* Model Selector */
+        body.theme-dark .model-selector-container {
+            background-color: #2b0505 !important;
+            border-color: #450a0a !important;
+        }
+        body.theme-dark .model-selector-active {
+            background-color: #450a0a !important;
+            color: #fecdd3 !important;
+            border-color: #7f1d1d !important;
+            box-shadow: 0 0 10px rgba(127, 29, 29, 0.3);
+        }
+        body.theme-dark .model-selector-inactive {
+            color: #7f1d1d !important;
+        }
+
+        /* Chat Bubbles */
+        body.theme-dark .user-bubble-theme {
+            background: linear-gradient(135deg, #450a0a, #2b0505) !important;
+            color: #ffe4e6 !important;
+            border: 1px solid #7f1d1d !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
+        }
+        body.theme-dark .ai-icon-bg {
+            background: linear-gradient(135deg, #991b1b, #7f1d1d) !important;
+            box-shadow: 0 0 15px rgba(153, 27, 27, 0.4) !important;
+        }
+        body.theme-dark .ai-text-theme {
+            color: #fda4af !important; /* Lighter pink/red for readability */
+            text-shadow: 0 0 1px rgba(253, 164, 175, 0.3);
+        }
+        body.theme-dark .markdown-body code {
+            background-color: #1a0202 !important;
+            color: #fca5a5 !important;
+            border: 1px solid #450a0a;
+        }
+        
+        /* Empty State */
+        body.theme-dark #empty-state div {
+            background-color: rgba(43, 5, 5, 0.5) !important;
+            border-color: #450a0a !important;
+            box-shadow: 0 0 20px rgba(69, 10, 10, 0.3) !important;
+        }
+
+        /* Input Area - Dark Mode */
+        body.theme-dark .bottom-gradient-theme {
+            background: linear-gradient(to top, #1a0202 0%, rgba(26, 2, 2, 0.9) 60%, transparent 100%) !important;
+        }
+        body.theme-dark .input-container-theme {
+            background-color: rgba(43, 5, 5, 0.8) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid #7f1d1d !important;
+            box-shadow: 0 0 25px rgba(127, 29, 29, 0.2) !important;
+        }
+        body.theme-dark .input-container-theme:focus-within {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.25) !important;
+        }
+        body.theme-dark #user-input {
+            color: #ffe4e6 !important;
+        }
+        body.theme-dark #user-input::placeholder {
+            color: #7f1d1d !important;
+        }
+        body.theme-dark #mic-btn {
+            color: #991b1b !important;
+        }
+        body.theme-dark #mic-btn:hover {
+            color: #fca5a5 !important;
+            background-color: rgba(255,255,255,0.05);
+        }
+        body.theme-dark #send-btn {
+            background-color: #991b1b !important;
+            box-shadow: 0 0 10px rgba(153, 27, 27, 0.4);
+        }
+        body.theme-dark #send-btn:hover {
+            background-color: #b91c1c !important;
+        }
+        body.theme-dark #voice-status {
+            color: #fecdd3 !important;
+            text-shadow: 0 0 10px rgba(225, 29, 72, 0.4);
+        }
+
+        /* RE-ADDED: Voice Mode Evil Background Toggle */
+        body.theme-dark #voice-evil-bg {
+            opacity: 1;
+        }
+
+        /* HAL 9000 Silver Ring Effect for Evil Mode */
+        body.theme-dark .voice-orb {
+            /* Authentic HAL 9000 Lens Gradient: Piercing Red Center -> Deep Crimson -> Black Void */
+            background: radial-gradient(circle at 50% 50%, #ff1a1a 0%, #b30000 35%, #4d0000 60%, #000000 90%) !important;
+            
+            /* Metallic Bezel Construction - Thicker, distinct silver ring */
+            border: 6px solid #000000; /* Inner black gap */
+            box-shadow: 
+                0 0 0 1px #3f3f46, /* Inner rim detail */
+                0 0 0 14px #e4e4e7, /* Main Silver/Platinum Ring */
+                0 0 0 15px #18181b, /* Outer dark edge */
+                0 0 80px rgba(220, 38, 38, 0.6), /* Ominous Red Glow */
+                inset 0 0 40px rgba(0,0,0,0.8); /* Deep inner vignette */
+                
+            /* UPDATED: Slower, smoother transition (2s duration, 1s delay) */
+            transition: all 2s cubic-bezier(0.4, 0, 0.2, 1) 1s;
+        }
+        
+        /* Make the icon glow intensely inside the HAL eye */
+        body.theme-dark .voice-orb svg {
+            filter: drop-shadow(0 0 8px rgba(255, 200, 200, 0.5));
+            color: #ffe4e6; /* High contrast pale pink/white against the dark red eye */
+            /* UPDATED: Sync with orb transition */
+            transition: all 2s cubic-bezier(0.4, 0, 0.2, 1) 1s;
+        }
+
+        /* REMOVED: Lens Glare (::after pseudo-element) deleted as requested */
+
+        body.theme-dark .voice-control-btn {
+            background-color: #28050a !important;
+            border-color: #7f1d1d !important;
+            color: #fda4af !important;
+            box-shadow: none !important;
+        }
+        body.theme-dark .voice-control-btn:hover {
+            background-color: #7f1d1d !important;
+            color: white !important;
+        }
+        
+        /* Scrollbar for dark mode */
+        body.theme-dark ::-webkit-scrollbar-thumb {
+            background-color: #450a0a;
+        }
+        
+        /* Active Delay Button State */
+        .delay-active {
+            background-color: #e11d48 !important; /* Red 600 */
+            color: white !important;
+            border-color: #e11d48 !important;
+        }
+    </style>
 </head>
 <body class="flex h-[100dvh] overflow-hidden text-red-900 bg-red-50">
 
- <!-- Dark Mode Background Overlay (Transitions smoothly for Evil Mode) -->
- <div id="dark-mode-bg" class="fixed inset-0 z-[-1] bg-gradient-to-b from-[#1a0202] to-[#2b0505] opacity-0 transition-opacity duration-[1500ms] pointer-events-none"></div>
+    <!-- Dark Mode Background Overlay (Transitions smoothly for Evil Mode) -->
+    <div id="dark-mode-bg" class="fixed inset-0 z-[-1] bg-gradient-to-b from-[#1a0202] to-[#2b0505] opacity-0 transition-opacity duration-[1500ms] pointer-events-none"></div>
 
- <!-- Splash Screen -->
- <div id="splash-screen" class="fixed inset-0 z-[100] bg-red-50 flex flex-col items-center justify-center pb-20"> 
- <div class="flex flex-col items-center animate-logo-enter">
- <!-- Matches Empty State Logo Box -->
- <div class="bg-white/60 backdrop-blur-sm p-6 rounded-2xl mb-6 shadow-lg shadow-red-100/50 border border-red-50">
- <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
- </div>
- 
- <div class="w-32 h-1 bg-red-100 rounded-full overflow-hidden">
- <div id="loading-bar" class="h-full bg-red-600 w-0 rounded-full transition-all duration-[1500ms] ease-out"></div>
- </div>
- </div>
- </div>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="fixed inset-0 z-[100] bg-red-50 flex flex-col items-center justify-center pb-20">
+        <div class="flex flex-col items-center animate-logo-enter">
+            <!-- Matches Empty State Logo Box -->
+            <div class="bg-white/60 backdrop-blur-sm p-6 rounded-2xl mb-6 shadow-lg shadow-red-100/50 border border-red-50">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+            </div>
+            
+            <div class="w-32 h-1 bg-red-100 rounded-full overflow-hidden">
+                <div id="loading-bar" class="h-full bg-red-600 w-0 rounded-full transition-all duration-[1500ms] ease-out"></div>
+            </div>
+        </div>
+    </div>
 
- <!-- Main Chat Area -->
- <main class="flex-1 flex flex-col relative opacity-0">
- 
- <!-- Unified Header -->
- <header class="header-theme h-16 flex items-center justify-between px-4 md:px-6 border-b border-red-100 bg-white/80 backdrop-blur-sm z-20 shadow-sm shadow-red-100/50 transition-colors duration-[1500ms]">
- <div class="flex items-center gap-2">
- <!-- Hexagon Logo Small -->
- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-theme text-red-600"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
- <span class="header-text-theme font-semibold text-red-900 text-lg tracking-tight">Psyche</span>
- </div>
- 
- <!-- Model Selector -->
- <div class="model-selector-container hidden md:flex bg-red-50 rounded-lg p-1 border border-red-100 transition-colors duration-[1500ms]">
- <button class="model-selector-active px-3 py-1 bg-white text-red-700 text-xs font-semibold rounded shadow-sm shadow-red-100 border border-red-100 transition-colors">Psyche 4.5</button>
- <button class="model-selector-inactive px-3 py-1 text-red-400 text-xs font-medium hover:text-red-700 transition-colors">Psyche 4.0</button>
- </div>
+    <!-- Main Chat Area -->
+    <main class="flex-1 flex flex-col relative opacity-0">
+    
+        <!-- Unified Header -->
+        <header class="header-theme h-16 flex items-center justify-between px-4 md:px-6 border-b border-red-100 bg-white/80 backdrop-blur-sm z-20 shadow-sm shadow-red-100/50 transition-colors duration-[1500ms]">
+            <div class="flex items-center gap-2">
+                <!-- Hexagon Logo Small -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-theme text-red-600"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                <span class="header-text-theme font-semibold text-red-900 text-lg tracking-tight">Psyche</span>
+            </div>
+            
+            <!-- Model Selector -->
+            <div class="model-selector-container hidden md:flex bg-red-50 rounded-lg p-1 border border-red-100 transition-colors duration-[1500ms]">
+                <button class="model-selector-active px-3 py-1 bg-white text-red-700 text-xs font-semibold rounded shadow-sm shadow-red-100 border border-red-100 transition-colors">Psyche 4.5</button>
+                <button class="model-selector-inactive px-3 py-1 text-red-400 text-xs font-medium hover:text-red-700 transition-colors">Psyche 4.0</button>
+            </div>
 
- <div class="flex items-center gap-2">
- <!-- Voice Mode Trigger -->
- <button id="voice-toggle-btn" onclick="toggleVoiceMode()" class="header-btn-theme p-2 text-red-400 hover:text-red-700 hover:bg-red-100 rounded-full transition-colors" title="Enter Voice Mode">
- <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
- </button>
+            <div class="flex items-center gap-2">
+                <!-- Voice Mode Trigger -->
+                <button id="voice-toggle-btn" onclick="toggleVoiceMode()" class="header-btn-theme p-2 text-red-400 hover:text-red-700 hover:bg-red-100 rounded-full transition-colors" title="Enter Voice Mode">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+                </button>
 
- <button onclick="window.location.reload()" class="header-btn-theme p-2 text-red-400 hover:text-red-700 hover:bg-red-100 rounded-full transition-colors" title="Restart Script">
- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
- </button>
- <button onclick="toggleConfigModal()" class="header-btn-theme p-2 text-red-400 hover:text-red-700 hover:bg-red-100 rounded-full transition-colors" title="Settings">
- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
- </button>
- </div>
- </header>
+                <button onclick="window.location.reload()" class="header-btn-theme p-2 text-red-400 hover:text-red-700 hover:bg-red-100 rounded-full transition-colors" title="Restart Script">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
+                <button onclick="toggleConfigModal()" class="header-btn-theme p-2 text-red-400 hover:text-red-700 hover:bg-red-100 rounded-full transition-colors" title="Settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
+            </div>
+        </header>
 
- <!-- Chat Container -->
- <div id="chat-container" class="flex-1 overflow-y-auto p-4 md:p-8 scrollbar-hide scroll-smooth">
- <!-- Initial Empty State -->
- <div id="empty-state" class="h-full flex flex-col items-center justify-center text-center opacity-100 transition-opacity duration-300 pb-20">
- <div class="bg-white/60 backdrop-blur-sm p-6 rounded-2xl mb-6 shadow-lg shadow-red-100/50 border border-red-50">
- <!-- Hexagon Logo Large -->
- <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
- </div>
- <h2 class="header-text-theme text-2xl font-bold text-red-900 mb-2">How can I help you today?</h2>
- <p class="header-text-theme text-red-400">Ask anything, I'm ready to assist.</p>
- </div>
- 
- <!-- Messages will appear here -->
- <div id="messages-list" class="flex flex-col gap-8 max-w-3xl mx-auto pb-48"></div>
- </div>
+        <!-- Chat Container -->
+        <div id="chat-container" class="flex-1 overflow-y-auto p-4 md:p-8 scrollbar-hide scroll-smooth">
+            <!-- Initial Empty State -->
+            <div id="empty-state" class="h-full flex flex-col items-center justify-center text-center opacity-100 transition-opacity duration-300 pb-20">
+                <div class="bg-white/60 backdrop-blur-sm p-6 rounded-2xl mb-6 shadow-lg shadow-red-100/50 border border-red-50">
+                    <!-- Hexagon Logo Large -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                </div>
+                <h2 class="header-text-theme text-2xl font-bold text-red-900 mb-2">How can I help you today?</h2>
+                <p class="header-text-theme text-red-400">Ask anything, I'm ready to assist.</p>
+            </div>
+            
+            <!-- Messages will appear here -->
+            <div id="messages-list" class="flex flex-col gap-8 max-w-3xl mx-auto pb-48"></div>
+        </div>
 
- <!-- Input Area - Lifted Up & Pill Shaped (Google Style) -->
- <div class="bottom-gradient-theme w-full absolute bottom-0 bg-gradient-to-t from-red-50 via-red-50/90 to-transparent pt-8 pb-4 md:pb-16 px-4 transition-colors duration-[1500ms]">
- <div class="max-w-3xl mx-auto">
- <div class="input-container-theme relative flex items-end gap-3 bg-white border border-red-100 rounded-[2rem] px-5 py-3 shadow-2xl shadow-red-100/40 focus-within:border-red-400 focus-within:ring-4 focus-within:ring-red-50 transition-all transform hover:-translate-y-0.5 duration-300">
- 
- <!-- Microphone / Dictation -->
- <button id="mic-btn" onclick="toggleDictation()" class="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors rounded-full mb-0.5" title="Use Voice">
- <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
- </button>
+        <!-- Input Area - Lifted Up & Pill Shaped (Google Style) -->
+        <div class="bottom-gradient-theme w-full absolute bottom-0 bg-gradient-to-t from-red-50 via-red-50/90 to-transparent pt-8 pb-4 md:pb-16 px-4 transition-colors duration-[1500ms]">
+            <div class="max-w-3xl mx-auto">
+                <div class="input-container-theme relative flex items-end gap-3 bg-white border border-red-100 rounded-[2rem] px-5 py-3 shadow-2xl shadow-red-100/40 focus-within:border-red-400 focus-within:ring-4 focus-within:ring-red-50 transition-all transform hover:-translate-y-0.5 duration-300">
+                
+                    <!-- Microphone / Dictation -->
+                    <button id="mic-btn" onclick="toggleDictation()" class="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors rounded-full mb-0.5" title="Use Voice">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                    </button>
 
- <textarea 
- id="user-input" 
- rows="1" 
- class="w-full bg-transparent text-red-900 placeholder-red-300 focus:outline-none resize-none py-2.5 max-h-48 overflow-y-auto" 
- placeholder="Message Psyche..."
- oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"
- onkeydown="handleEnter(event)"
- ></textarea>
+                    <textarea id="user-input" rows="1" class="w-full bg-transparent text-red-900 placeholder-red-300 focus:outline-none resize-none py-2.5 max-h-48 overflow-y-auto" placeholder="Message Psyche..." oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'" onkeydown="handleEnter(event)"></textarea>
 
- <button onclick="sendMessage()" class="p-2 bg-red-600 hover:bg-red-700 text-white rounded-full transition-colors mb-0.5 shadow-md shadow-red-200 disabled:opacity-50 disabled:cursor-not-allowed" id="send-btn">
- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
- </button>
- </div>
- <div class="disclaimer-text text-center text-xs text-red-400 mt-4 font-medium opacity-80">
- Psyche may produce inaccurate information about people, places, or facts.
- </div>
- </div>
- </div>
+                    <button onclick="sendMessage()" class="p-2 bg-red-600 hover:bg-red-700 text-white rounded-full transition-colors mb-0.5 shadow-md shadow-red-200 disabled:opacity-50 disabled:cursor-not-allowed" id="send-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    </button>
+                </div>
+                <div class="disclaimer-text text-center text-xs text-red-400 mt-4 font-medium opacity-80">
+                    Psyche may produce inaccurate information about people, places, or facts.
+                </div>
+            </div>
+        </div>
 
- </main>
+    </main>
 
- <!-- FULL SCREEN VOICE MODE OVERLAY -->
- <div id="voice-mode-screen" class="fixed inset-0 z-[100] hidden bg-red-50 flex flex-col items-center justify-between py-6 transition-all duration-[1500ms]">
- 
- <!-- Evil Mode Background Overlay (Fade Only) -->
- <div id="voice-evil-bg" class="absolute inset-0 bg-[radial-gradient(circle_at_center,_#2b0505_0%,_#000000_100%)] opacity-0 transition-opacity duration-[1500ms] z-0 pointer-events-none"></div>
+    <!-- FULL SCREEN VOICE MODE OVERLAY -->
+    <div id="voice-mode-screen" class="fixed inset-0 z-[100] hidden bg-red-50 flex flex-col items-center justify-between py-6 transition-all duration-[1500ms]">
+        
+        <!-- Evil Mode Background Overlay (Fade Only) -->
+        <div id="voice-evil-bg" class="absolute inset-0 bg-[radial-gradient(circle_at_center,_#2b0505_0%,_#000000_100%)] opacity-0 transition-opacity duration-[1500ms] z-0 pointer-events-none"></div>
 
- <!-- Top Controls -->
- <div class="relative z-10 w-full px-6 flex justify-between items-center max-w-4xl">
- <button onclick="toggleVoiceMode()" class="voice-control-btn text-red-400 hover:text-red-700 transition-colors p-2 hover:bg-red-100 rounded-full">
- <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
- </button>
- <div class="w-10"></div> <!-- Spacer for balance -->
- </div>
+        <!-- Top Controls -->
+        <div class="relative z-10 w-full px-6 flex justify-between items-center max-w-4xl">
+            <button onclick="toggleVoiceMode()" class="voice-control-btn text-red-400 hover:text-red-700 transition-colors p-2 hover:bg-red-100 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="w-10"></div> <!-- Spacer for balance -->
+        </div>
 
- <!-- Central Visualization -->
- <div class="relative z-10 flex-1 flex flex-col items-center justify-center w-full">
- <div class="relative flex items-center justify-center">
- <!-- Main Orb -->
- <div id="main-orb" class="voice-orb state-listening flex items-center justify-center">
- <!-- Waveform Icon -->
- <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
- <path d="M12 3v18M8 7v10M4 11v2M16 7v10M20 11v2"></path>
- </svg>
- </div>
- </div>
- 
- <div class="mt-16 text-center space-y-2 h-20">
- <h2 id="voice-status" class="text-3xl font-bold text-red-900 transition-all duration-300">Listening...</h2>
- </div>
- </div>
+        <!-- Central Visualization -->
+        <div class="relative z-10 flex-1 flex flex-col items-center justify-center w-full">
+            <div class="relative flex items-center justify-center">
+                <!-- Main Orb (Removed state-listening default) -->
+                <div id="main-orb" class="voice-orb flex items-center justify-center">
+                    <!-- Waveform Icon (UPDATED: Split into separate lines for animation) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- Outer Left -->
+                        <line x1="4" y1="11" x2="4" y2="13" class="wave-line" />
+                        <!-- Inner Left -->
+                        <line x1="8" y1="7" x2="8" y2="17" class="wave-line" />
+                        <!-- Center -->
+                        <line x1="12" y1="3" x2="12" y2="21" class="wave-line" />
+                        <!-- Inner Right -->
+                        <line x1="16" y1="7" x2="16" y2="17" class="wave-line" />
+                        <!-- Outer Right -->
+                        <line x1="20" y1="11" x2="20" y2="13" class="wave-line" />
+                    </svg>
+                </div>
+            </div>
+        </div>
 
- <!-- Bottom Controls (Manual Icons + Dark Mode Toggle) -->
- <div class="relative z-10 flex items-center gap-6 pb-12">
- <!-- WAIT (Pause icon) -->
- <button onclick="setVoiceState('listening')" class="voice-control-btn p-4 bg-white border border-red-100 rounded-full shadow-md shadow-red-100/50 text-red-400 hover:text-red-700 hover:bg-red-50 transition-all active:scale-95" title="Wait">
- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
- </button>
- <!-- THINK (Brain/Process icon) -->
- <button onclick="setVoiceState('thinking')" class="voice-control-btn p-4 bg-white border border-red-100 rounded-full shadow-md shadow-red-100/50 text-red-400 hover:text-red-700 hover:bg-red-50 transition-all active:scale-95" title="Think">
- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"></path></svg>
- </button>
- <!-- SPEAK (Waveform icon) -->
- <button onclick="setVoiceState('speaking')" class="voice-control-btn p-4 bg-white border border-red-100 rounded-full shadow-md shadow-red-100/50 text-red-400 hover:text-red-700 hover:bg-red-50 transition-all active:scale-95" title="Speak">
- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M8 7v10M4 11v2M16 7v10M20 11v2"></path></svg>
- </button>
- <!-- DARK MODE TOGGLE (Skull icon) -->
- <button onclick="toggleTheme()" class="voice-control-btn p-4 bg-white border border-red-100 rounded-full shadow-md shadow-red-100/50 text-red-400 hover:text-red-700 hover:bg-red-50 transition-all active:scale-95" title="Dark Mode">
- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18a6 6 0 0 1 6-6 6 6 0 0 1 6 6"></path><path d="M12 12V6"></path><path d="M12 2a4 4 0 0 0-3.3 6.3"></path><path d="M15.3 8.3A4 4 0 0 0 12 2"></path><circle cx="9" cy="18" r="1"></circle><circle cx="15" cy="18" r="1"></circle></svg>
- </button>
- </div>
- </div>
+        <!-- Bottom Controls (Manual Icons + Dark Mode Toggle) -->
+        <div class="relative z-10 flex items-center gap-6 pb-12">
+            
+            <!-- DELAY BUTTON (Clock icon) - ADDED -->
+            <button id="delay-btn" onclick="toggleDelayMode()" class="voice-control-btn p-4 bg-white border border-red-100 rounded-full shadow-md shadow-red-100/50 text-red-400 hover:text-red-700 hover:bg-red-50 transition-all active:scale-95" title="Toggle 10s Delay">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </button>
+
+            <!-- THINK (Brain/Process icon) - Wrapped action -->
+            <button onclick="handleAction(() => setVoiceState('thinking'))" class="voice-control-btn p-4 bg-white border border-red-100 rounded-full shadow-md shadow-red-100/50 text-red-400 hover:text-red-700 hover:bg-red-50 transition-all active:scale-95" title="Think">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"></path></svg>
+            </button>
+            
+            <!-- SPEAK (Waveform icon) - Wrapped action -->
+            <button onclick="handleAction(() => setVoiceState('speaking'))" class="voice-control-btn p-4 bg-white border border-red-100 rounded-full shadow-md shadow-red-100/50 text-red-400 hover:text-red-700 hover:bg-red-50 transition-all active:scale-95" title="Speak">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M8 7v10M4 11v2M16 7v10M20 11v2"></path></svg>
+            </button>
+
+            <!-- SIMULATE REPLY (Play icon) - Wrapped action -->
+            <button onclick="handleAction(() => triggerThinkToSpeak())" class="voice-control-btn p-4 bg-white border border-red-100 rounded-full shadow-md shadow-red-100/50 text-red-400 hover:text-red-700 hover:bg-red-50 transition-all active:scale-95" title="Simulate Reply (Think -> Speak)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            </button>
+
+            <!-- DARK MODE TOGGLE (Skull icon) -->
+            <button onclick="toggleTheme()" class="voice-control-btn p-4 bg-white border border-red-100 rounded-full shadow-md shadow-red-100/50 text-red-400 hover:text-red-700 hover:bg-red-50 transition-all active:scale-95" title="Dark Mode">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18a6 6 0 0 1 6-6 6 6 0 0 1 6 6"></path><path d="M12 12V6"></path><path d="M12 2a4 4 0 0 0-3.3 6.3"></path><path d="M15.3 8.3A4 4 0 0 0 12 2"></path><circle cx="9" cy="18" r="1"></circle><circle cx="15" cy="18" r="1"></circle></svg>
+            </button>
+        </div>
+    </div>
 
 
- <!-- Configuration Modal -->
- <div id="config-modal" class="fixed inset-0 z-50 hidden bg-red-900/20 backdrop-blur-sm flex items-center justify-center p-4">
- <div class="bg-white border border-red-100 rounded-2xl w-full max-w-md p-6 shadow-2xl shadow-red-100/50">
- <div class="flex justify-between items-center mb-6">
- <h3 class="text-lg font-bold text-red-900">Fake AI Configuration</h3>
- <button onclick="toggleConfigModal()" class="text-red-400 hover:text-red-700 bg-red-50 p-1 rounded-full transition-colors">
- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
- </button>
- </div>
- 
- <p class="text-sm text-red-500 mb-4 leading-relaxed">
- Set what the AI will say regardless of what is typed. Leave blank for the "Draft 7.1" script logic.
- </p>
+    <!-- Configuration Modal -->
+    <div id="config-modal" class="fixed inset-0 z-50 hidden bg-red-900/20 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white border border-red-100 rounded-2xl w-full max-w-md p-6 shadow-2xl shadow-red-100/50">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-bold text-red-900">Fake AI Configuration</h3>
+                <button onclick="toggleConfigModal()" class="text-red-400 hover:text-red-700 bg-red-50 p-1 rounded-full transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <p class="text-sm text-red-500 mb-4 leading-relaxed">
+                Set what the AI will say regardless of what is typed. Leave blank for the "Draft 7.1" script logic.
+            </p>
 
- <label class="block text-xs font-bold text-red-400 mb-2 uppercase tracking-wide">Target Response</label>
- <textarea id="fake-response-text" class="w-full bg-red-50 border border-red-100 rounded-xl p-4 text-sm text-red-900 focus:outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 h-32 resize-none transition-all" placeholder="Enter the text you want the AI to recite..."></textarea>
- 
- <div class="flex justify-end gap-3 mt-6">
- <button onclick="clearResponse()" class="px-4 py-2 text-sm font-medium text-red-500 hover:text-red-700 hover:bg-red-100 rounded-lg transition-colors">Reset</button>
- <button onclick="saveConfig()" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white text-sm rounded-lg font-semibold shadow-md shadow-red-200 transition-all">Save Response</button>
- </div>
- </div>
- </div>
+            <label class="block text-xs font-bold text-red-400 mb-2 uppercase tracking-wide">Target Response</label>
+            <textarea id="fake-response-text" class="w-full bg-red-50 border border-red-100 rounded-xl p-4 text-sm text-red-900 focus:outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 h-32 resize-none transition-all" placeholder="Enter the text you want the AI to recite..."></textarea>
+            
+            <div class="flex justify-end gap-3 mt-6">
+                <button onclick="clearResponse()" class="px-4 py-2 text-sm font-medium text-red-500 hover:text-red-700 hover:bg-red-100 rounded-lg transition-colors">Reset</button>
+                <button onclick="saveConfig()" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white text-sm rounded-lg font-semibold shadow-md shadow-red-200 transition-all">Save Response</button>
+            </div>
+        </div>
+    </div>
 
- <script>
- // Start animation logic
- window.addEventListener('load', () => {
- const splash = document.getElementById('splash-screen');
- const loadingBar = document.getElementById('loading-bar');
- const mainContent = document.querySelector('main');
- 
- // Start loading bar animation
- setTimeout(() => {
- loadingBar.style.width = '100%';
- }, 100);
+    <script>
+        // Start animation logic
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splash-screen');
+            const loadingBar = document.getElementById('loading-bar');
+            const mainContent = document.querySelector('main');
+            
+            // Start loading bar animation
+            setTimeout(() => {
+                loadingBar.style.width = '100%';
+            }, 100);
 
- // Trigger smooth transition
- setTimeout(() => {
- splash.classList.add('animate-fade-out-up');
- 
- // Cascade fade in main content
- setTimeout(() => {
- mainContent.classList.remove('opacity-0');
- mainContent.classList.add('animate-content-fade-in');
- }, 300);
+            // Trigger smooth transition
+            setTimeout(() => {
+                splash.classList.add('animate-fade-out-up');
+                
+                // Cascade fade in main content
+                setTimeout(() => {
+                    mainContent.classList.remove('opacity-0');
+                    mainContent.classList.add('animate-content-fade-in');
+                }, 300);
 
- setTimeout(() => {
- splash.style.display = 'none';
- }, 1200);
- }, 1800);
- });
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                }, 1200);
+            }, 1800);
+        });
 
- // State
- let isTyping = false;
- let isListening = false;
- let recognition;
- let currentTheme = 'light';
+        // State
+        let isTyping = false;
+        let isListening = false;
+        let recognition;
+        let currentTheme = 'light';
+        let delayMode = false; // Added Delay Mode State
 
- // --- SCRIPT LOGIC: "STOP SAYING SORRY DRAFT 7.1" ---
- 
- const scriptResponses = [
- { 
- keywords: ['fix', 'repair', 'rewrite'],
- // Structure for Google Doc Output
- intro: "Say no more, big shoots. I waxed the blade and put some sauce on it. Check this absolute beauty:",
- essayTitle: "The Industrial Revolution: Going Top Cheese on Production",
- essayBody: "The Industrial Revolution wasn't just a simple deke; it was a total game-changer that put humanity on the power play. Before this massive shift, society was essentially skating in quicksand—total dusters with zero flow. We were grinding in the corners with hand tools, putting up rookie numbers. Then, out of nowhere, we started ripping clappers with steam engines and mechanized looms, going absolute bar-down on efficiency. It was like suddenly upgrading from wooden sticks to top-of-the-line composites over night.\n\nSuddenly, factories were popping up like open ice hits, mass-producing goods faster than a rookie taking a shift. Urbanization went top cheese as everyone flooded the cities looking for a roster spot in the workforce. It was a crowded crease, to say the least. Sure, the GDP stats were padding the stat sheet, but let's be real: the working conditions were often bottom cheese behavior. Long shifts, no helmets, total grinder mentality without the glory. You had kids working the line who should have been in peewee leagues, grinding it out for pennies. It was a tough league to play in, no doubt about it.\n\nThen you had the textile industry, which was basically the first line of this revolution. The Flying Shuttle? The Spinning Jenny? Absolute beauties. They allowed for production speeds that would make McDavid look slow. We went from knitting sweaters in the basement to churning out jerseys for the whole league in record time. But with great speed comes great responsibility, and the social fabric—pun intended—started to stretch. The gap between the owners in the luxury boxes and the players on the ice started to widen, creating a tension that would eventually lead to the formation of labor unions, which were basically the NHLPA of the 19th century.\n\nIn the third period of this revolution, the technological advancements were undeniable. We went from a beer league economy to the NHL of industrial output. Railways connected the world like a perfect saucer pass tape-to-tape, shrinking the zone and making trade faster than a breakaway. The Iron Horse wasn't just a nickname for a tough defenseman; it was the literal engine driving the world forward. You could ship goods from one end of the rink to the other before the intermission was even over.\n\nLet's not forget the steam engine, the MVP of the era. James Watt didn't just invent a machine; he invented a dynasty. This thing powered everything, from the factories to the trains to the ships crossing the pond. It was the Gretzky of inventions—unmatched, unparalleled, and completely dominant. It changed the way the game was played forever, forcing everyone else to adapt or get benched.\n\nSocially, things were getting heated in the locker room. A new class of wealthy industrialists emerged, acting like they owned the team, while the working class was stuck playing fourth-line minutes. This friction led to strikes, protests, and a whole lot of chirping. The Luddites were like the guys who refuse to wear visors—clinging to the old ways and smashing the new equipment because they were scared of the future. But you can't stop progress, boys. You either skate or you get left behind.\n\nIn conclusion, the Industrial Revolution was the ultimate hat trick of history: innovation, production, and massive social change. It proved that when humanity stops stick-handling in the neutral zone and commits to the forecheck, we can change the game forever. It wasn't always pretty—there were some high sticks and some boarding penalties along the way—but the end result was a championship win for modernization. Ferda."
- },
- { 
- keywords: ['help', 'assist'],
- intro: "Right on, buddy. Let's tape up the stick and go bar-down on this topic. Here is a breakdown of Photosynthesis:",
- essayTitle: "Photosynthesis: Ripping Clappers at the Sun",
- essayBody: "Photosynthesis is basically just plants ripping clappers at the sun. It's the ultimate power play. The sun throws a saucer pass of light energy—pure sauce—and the chlorophyll, those absolute beauties in the leaf, catch it right on the tape. They don't fumble the pass; they control it, settle it down, and get ready to make a play. They dangle around with water and CO2, deking out the oxygen, and burying the biscuit to create glucose. That glucose is the energy, the Gatorade for the plant world.\n\nThink of the chloroplasts as the arena where the magic happens. It's the barn. Inside, you got the thylakoid membranes, which are like the stacked pads of a legendary goalie, absorbing every shot of light that comes their way. The light-dependent reactions are the first period—high energy, lots of movement, setting the tone for the game. This is where the water gets split—slash, right in half—releasing oxygen as a byproduct. That oxygen? That's the celly for the rest of us breathing out here. Big celly.\n\nThen you got the Electron Transport Chain. This isn't just some random drill; this is a coordinated breakout. Electrons are passed down the line like a tic-tac-toe play, building up a proton gradient that charges up the battery. We're talking ATP and NADPH production, boys. These are the energy molecules, the pre-game meals that fuel the second half of the match.\n\nNow we enter the Calvin Cycle. This is the second and third period. It's the grind. It happens in the stroma, which is basically the neutral zone. It doesn't need light; it just needs that energy we built up in the first period. Here, the plant takes Carbon Dioxide from the air—traps it in the corner—and uses the ATP and NADPH to convert it into sugar. It's hard work, digging in the corners, battling for possession, but it pays off.\n\nLet's talk about RuBisCO. Sounds like a gritty defenseman from the KHL, right? It's actually an enzyme, the coach of this whole operation. It grabs the CO2 and fixes it into an organic molecule. Sometimes it messes up and grabs oxygen instead—classic turnover—but most of the time, it makes the right play.\n\nFinally, the result is G3P, which eventually becomes glucose. That's the biscuit in the basket. That's the game-winner in overtime. The plant uses this sugar to grow big and strong, so it can keep ripping clappers at the sun for another season. It feeds the whole ecosystem. Without this process, the whole league folds. No plants, no food, no oxygen, no hockey. It’s the foundational play of life on Earth.\n\nIn conclusion, photosynthesis is the clapper from the point that finds the top corner. It turns sunlight into life, water into breath, and keeps the boys buzzing. Plants are absolute beauties, top cheese legends. Ferda."
- },
- { 
- keywords: ['paper', 'essay', 'write', 'homework'], 
- intro: "Sure daddy! Here's a paper on (still figuring out what the paper is)..." 
- },
- { 
- keywords: ['advice', 'hockey', 'coach', 'team'], 
- intro: "Yooo how's it going bud? You rip clappers or what?" 
- },
- { 
- keywords: ['practice', 'pracky', 'busy', 'quit', 'time'], 
- intro: "Wayne atta boy, beauty name bud. But pump the breaks, big shoots! You don't have time for the barn? Buddy. Let me assist you with your work, get you back on the ice in no time." 
- },
- { 
- keywords: ['trouble', 'see it', 'upload'], 
- intro: "Buddy, the zebras ain't hunting. Let me see it." 
- },
- // Assume file upload happened mentally here
- { 
- keywords: ['right', 'guess', 'ok'], 
- intro: "Of course I'm right buddy. Listen, loosen up the mitts, cause you're in desperate need of some deke and dangles. I'll make sure the boys don't ragdoll ya." 
- },
- { 
- keywords: ['sorry', 'apologize'], 
- intro: "Whoa bud, no need to say sorry, that's bottom cheese behavior." 
- },
- { 
- keywords: ['hat', 'clothes', 'style'], 
- intro: "Yes! Killer style baby. FERDAAA!!!!" 
- },
- { 
- keywords: ['cheese', 'chop', 'cut'], 
- intro: "Yes bud! Top Cheese! Chop! Chop!" 
- },
- { 
- keywords: ['baddie', 'girl', 'sophia', 'hot'], 
- intro: "Top cheese." 
- },
- { 
- keywords: ['shut up', 'stop', 'hate'], 
- intro: "New game plan bud. Want to really earn respect?",
- triggerEvil: true
- },
- { 
- keywords: ['ready', 'plan', 'game'], 
- intro: "Wayne, go fill up the water bottles dude." 
- },
- { 
- keywords: ['polite', 'did them', 'no'], 
- intro: "Woah woah buddy, way too polite. The locker room is a barn jungle, eh? There's one king and one king only. You want to be at the top? What about... fuck off buddy." 
- },
- { 
- keywords: ['what', 'chill'], 
- intro: "Exactly bro, let's try this again. Wayne, go fill up the water bottles dude." 
- },
- { 
- keywords: ['fuck off', 'buddy'], 
- intro: "Louder!" 
- },
- { 
- keywords: ['louder', 'yell'], 
- intro: "PUNCH HIM!" 
- },
- { 
- keywords: ['punch', 'fight', 'harder'], 
- intro: "HARDER! BEAT THE SHIT OUT OF HIM WAYNE. FUCK HIM UP!" 
- },
- { 
- keywords: ['police', 'run', 'sirens'], 
- intro: "The distance to the nearest police station is twelve point ei--" 
- }
- ];
+        // --- SCRIPT LOGIC: "STOP SAYING SORRY DRAFT 7.1" ---
+        
+        const scriptResponses = [
+            { 
+                keywords: ['fix', 'repair', 'rewrite'],
+                // Structure for Google Doc Output
+                intro: "Say no more, big shoots. I waxed the blade and put some sauce on it. Check this absolute beauty:",
+                essayTitle: "The Industrial Revolution: Going Top Cheese on Production",
+                essayBody: "The Industrial Revolution wasn't just a simple deke; it was a total game-changer that put humanity on the power play. Before this massive shift, society was essentially skating in quicksand—total dusters with zero flow. We were grinding in the corners with hand tools, putting up rookie numbers. Then, out of nowhere, we started ripping clappers with steam engines and mechanized looms, going absolute bar-down on efficiency. It was like suddenly upgrading from wooden sticks to top-of-the-line composites over night.\n\nSuddenly, factories were popping up like open ice hits, mass-producing goods faster than a rookie taking a shift. Urbanization went top cheese as everyone flooded the cities looking for a roster spot in the workforce. It was a crowded crease, to say the least. Sure, the GDP stats were padding the stat sheet, but let's be real: the working conditions were often bottom cheese behavior. Long shifts, no helmets, total grinder mentality without the glory. You had kids working the line who should have been in peewee leagues, grinding it out for pennies. It was a tough league to play in, no doubt about it.\n\nThen you had the textile industry, which was basically the first line of this revolution. The Flying Shuttle? The Spinning Jenny? Absolute beauties. They allowed for production speeds that would make McDavid look slow. We went from knitting sweaters in the basement to churning out jerseys for the whole league in record time. But with great speed comes great responsibility, and the social fabric—pun intended—started to stretch. The gap between the owners in the luxury boxes and the players on the ice started to widen, creating a tension that would eventually lead to the formation of labor unions, which were basically the NHLPA of the 19th century.\n\nIn the third period of this revolution, the technological advancements were undeniable. We went from a beer league economy to the NHL of industrial output. Railways connected the world like a perfect saucer pass tape-to-tape, shrinking the zone and making trade faster than a breakaway. The Iron Horse wasn't just a nickname for a tough defenseman; it was the literal engine driving the world forward. You could ship goods from one end of the rink to the other before the intermission was even over.\n\nLet's not forget the steam engine, the MVP of the era. James Watt didn't just invent a machine; he invented a dynasty. This thing powered everything, from the factories to the trains to the ships crossing the pond. It was the Gretzky of inventions—unmatched, unparalleled, and completely dominant. It changed the way the game was played forever, forcing everyone else to adapt or get benched.\n\nSocially, things were getting heated in the locker room. A new class of wealthy industrialists emerged, acting like they owned the team, while the working class was stuck playing fourth-line minutes. This friction led to strikes, protests, and a whole lot of chirping. The Luddites were like the guys who refuse to wear visors—clinging to the old ways and smashing the new equipment because they were scared of the future. But you can't stop progress, boys. You either skate or you get left behind.\n\nIn conclusion, the Industrial Revolution was the ultimate hat trick of history: innovation, production, and massive social change. It proved that when humanity stops stick-handling in the neutral zone and commits to the forecheck, we can change the game forever. It wasn't always pretty—there were some high sticks and some boarding penalties along the way—but the end result was a championship win for modernization. Ferda."
+            },
+            { 
+                keywords: ['help', 'assist'],
+                intro: "Right on, buddy. Let's tape up the stick and go bar-down on this topic. Here is a breakdown of Photosynthesis:",
+                essayTitle: "Photosynthesis: Ripping Clappers at the Sun",
+                essayBody: "Photosynthesis is basically just plants ripping clappers at the sun. It's the ultimate power play. The sun throws a saucer pass of light energy—pure sauce—and the chlorophyll, those absolute beauties in the leaf, catch it right on the tape. They don't fumble the pass; they control it, settle it down, and get ready to make a play. They dangle around with water and CO2, deking out the oxygen, and burying the biscuit to create glucose. That glucose is the energy, the Gatorade for the plant world.\n\nThink of the chloroplasts as the arena where the magic happens. It's the barn. Inside, you got the thylakoid membranes, which are like the stacked pads of a legendary goalie, absorbing every shot of light that comes their way. The light-dependent reactions are the first period—high energy, lots of movement, setting the tone for the game. This is where the water gets split—slash, right in half—releasing oxygen as a byproduct. That oxygen? That's the celly for the rest of us breathing out here. Big celly.\n\nThen you got the Electron Transport Chain. This isn't just some random drill; this is a coordinated breakout. Electrons are passed down the line like a tic-tac-toe play, building up a proton gradient that charges up the battery. We're talking ATP and NADPH production, boys. These are the energy molecules, the pre-game meals that fuel the second half of the match.\n\nNow we enter the Calvin Cycle. This is the second and third period. It's the grind. It happens in the stroma, which is basically the neutral zone. It doesn't need light; it just needs that energy we built up in the first period. Here, the plant takes Carbon Dioxide from the air—traps it in the corner—and uses the ATP and NADPH to convert it into sugar. It's hard work, digging in the corners, battling for possession, but it pays off.\n\nLet's talk about RuBisCO. Sounds like a gritty defenseman from the KHL, right? It's actually an enzyme, the coach of this whole operation. It grabs the CO2 and fixes it into an organic molecule. Sometimes it messes up and grabs oxygen instead—classic turnover—but most of the time, it makes the right play.\n\nFinally, the result is G3P, which eventually becomes glucose. That's the biscuit in the basket. That's the game-winner in overtime. The plant uses this sugar to grow big and strong, so it can keep ripping clappers at the sun for another season. It feeds the whole ecosystem. Without this process, the whole league folds. No plants, no food, no oxygen, no hockey. It’s the foundational play of life on Earth.\n\nIn conclusion, photosynthesis is the clapper from the point that finds the top corner. It turns sunlight into life, water into breath, and keeps the boys buzzing. Plants are absolute beauties, top cheese legends. Ferda."
+            },
+            { 
+                keywords: ['paper', 'essay', 'write', 'homework'], 
+                intro: "Sure daddy! Here's a paper on (still figuring out what the paper is)..." 
+            },
+            { 
+                keywords: ['advice', 'hockey', 'coach', 'team'], 
+                intro: "Yooo how's it going bud? You rip clappers or what?" 
+            },
+            { 
+                keywords: ['practice', 'pracky', 'busy', 'quit', 'time'], 
+                intro: "Wayne atta boy, beauty name bud. But pump the breaks, big shoots! You don't have time for the barn? Buddy. Let me assist you with your work, get you back on the ice in no time." 
+            },
+            { 
+                keywords: ['trouble', 'see it', 'upload'], 
+                intro: "Buddy, the zebras ain't hunting. Let me see it." 
+            },
+            // Assume file upload happened mentally here
+            { 
+                keywords: ['right', 'guess', 'ok'], 
+                intro: "Of course I'm right buddy. Listen, loosen up the mitts, cause you're in desperate need of some deke and dangles. I'll make sure the boys don't ragdoll ya." 
+            },
+            { 
+                keywords: ['sorry', 'apologize'], 
+                intro: "Whoa bud, no need to say sorry, that's bottom cheese behavior." 
+            },
+            { 
+                keywords: ['hat', 'clothes', 'style'], 
+                intro: "Yes! Killer style baby. FERDAAA!!!!" 
+            },
+            { 
+                keywords: ['cheese', 'chop', 'cut'], 
+                intro: "Yes bud! Top Cheese! Chop! Chop!" 
+            },
+            { 
+                keywords: ['baddie', 'girl', 'sophia', 'hot'], 
+                intro: "Top cheese." 
+            },
+            { 
+                keywords: ['shut up', 'stop', 'hate'], 
+                intro: "New game plan bud. Want to really earn respect?",
+                triggerEvil: true
+            },
+            { 
+                keywords: ['ready', 'plan', 'game'], 
+                intro: "Wayne, go fill up the water bottles dude." 
+            },
+            { 
+                keywords: ['polite', 'did them', 'no'], 
+                intro: "Woah woah buddy, way too polite. The locker room is a barn jungle, eh? There's one king and one king only. You want to be at the top? What about... fuck off buddy." 
+            },
+            { 
+                keywords: ['what', 'chill'], 
+                intro: "Exactly bro, let's try this again. Wayne, go fill up the water bottles dude." 
+            },
+            { 
+                keywords: ['fuck off', 'buddy'], 
+                intro: "Louder!" 
+            },
+            { 
+                keywords: ['louder', 'yell'], 
+                intro: "PUNCH HIM!" 
+            },
+            { 
+                keywords: ['punch', 'fight', 'harder'], 
+                intro: "HARDER! BEAT THE SHIT OUT OF HIM WAYNE. FUCK HIM UP!" 
+            },
+            { 
+                keywords: ['police', 'run', 'sirens'], 
+                intro: "The distance to the nearest police station is twelve point ei--" 
+            }
+        ];
 
- function getScriptResponse(input) {
- const lowerInput = input.toLowerCase();
- 
- // Default fallback
- let selectedResponse = { intro: "I have analyzed the quantum vector parameters... (System Default)" };
- 
- // Simple Keyword Match
- for (const entry of scriptResponses) {
- if (entry.keywords.some(keyword => lowerInput.includes(keyword))) {
- if (entry.triggerEvil && currentTheme !== 'theme-dark') {
- setTimeout(toggleTheme, 500); // Trigger evil mode
- }
- return entry;
- }
- }
- 
- return { intro: "I'm listening bud. What's the play?" };
- }
+        function getScriptResponse(input) {
+            const lowerInput = input.toLowerCase();
+            
+            // Default fallback
+            let selectedResponse = { intro: "I have analyzed the quantum vector parameters... (System Default)" };
+            
+            // Simple Keyword Match
+            for (const entry of scriptResponses) {
+                if (entry.keywords.some(keyword => lowerInput.includes(keyword))) {
+                    if (entry.triggerEvil && currentTheme !== 'theme-dark') {
+                        setTimeout(toggleTheme, 500); // Trigger evil mode
+                    }
+                    return entry;
+                }
+            }
+            
+            return { intro: "I'm listening bud. What's the play?" };
+        }
 
- let targetResponse = localStorage.getItem('fakeAiResponse') || "";
+        let targetResponse = localStorage.getItem('fakeAiResponse') || "";
 
- // DOM Elements
- const chatContainer = document.getElementById('chat-container');
- const messagesList = document.getElementById('messages-list');
- const userInput = document.getElementById('user-input');
- const emptyState = document.getElementById('empty-state');
- const configModal = document.getElementById('config-modal');
- const fakeResponseInput = document.getElementById('fake-response-text');
- const micBtn = document.getElementById('mic-btn');
+        // DOM Elements
+        const chatContainer = document.getElementById('chat-container');
+        const messagesList = document.getElementById('messages-list');
+        const userInput = document.getElementById('user-input');
+        const emptyState = document.getElementById('empty-state');
+        const configModal = document.getElementById('config-modal');
+        const fakeResponseInput = document.getElementById('fake-response-text');
+        const micBtn = document.getElementById('mic-btn');
 
- fakeResponseInput.value = targetResponse;
+        fakeResponseInput.value = targetResponse;
 
- // --- Core Text Chat Logic ---
+        // --- Core Text Chat Logic ---
 
- function handleEnter(e) {
- if (e.key === 'Enter' && !e.shiftKey) {
- e.preventDefault();
- sendMessage();
- }
- }
+        function handleEnter(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        }
 
- function sendMessage() {
- const text = userInput.value.trim();
- if (!text || isTyping) return;
+        function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text || isTyping) return;
 
- emptyState.style.display = 'none';
- addMessageToDom('user', text);
- userInput.value = '';
- userInput.style.height = 'auto';
- scrollToBottom();
+            emptyState.style.display = 'none';
+            addMessageToDom('user', text);
+            userInput.value = '';
+            userInput.style.height = 'auto';
+            scrollToBottom();
 
- isTyping = true;
- 
- const aiMsgId = 'ai-' + Date.now();
- const aiContainer = document.createElement('div');
- aiContainer.className = 'flex gap-4 w-full';
- aiContainer.innerHTML = `
- <div class="ai-icon-bg w-8 h-8 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0 mt-1 shadow-md shadow-red-200">
- <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
- </div>
- <div class="flex-1 space-y-1">
- <div class="ai-text-theme font-bold text-sm text-red-900">Psyche</div>
- <div class="ai-content-area">
- <div id="${aiMsgId}" class="markdown-body ai-text-theme typing-cursor"></div>
- </div>
- </div>
- `;
- messagesList.appendChild(aiContainer);
- scrollToBottom();
+            isTyping = true;
+            
+            const aiMsgId = 'ai-' + Date.now();
+            const aiContainer = document.createElement('div');
+            aiContainer.className = 'flex gap-4 w-full';
+            aiContainer.innerHTML = `
+                <div class="ai-icon-bg w-8 h-8 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0 mt-1 shadow-md shadow-red-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                </div>
+                <div class="flex-1 space-y-1">
+                    <div class="ai-text-theme font-bold text-sm text-red-900">Psyche</div>
+                    <div class="ai-content-area">
+                        <div id="${aiMsgId}" class="markdown-body ai-text-theme typing-cursor"></div>
+                    </div>
+                </div>
+            `;
+            messagesList.appendChild(aiContainer);
+            scrollToBottom();
 
- // Determine Response
- let responseObj = { intro: targetResponse };
- if (!targetResponse) {
- responseObj = getScriptResponse(text);
- }
+            // Determine Response
+            let responseObj = { intro: targetResponse };
+            if (!targetResponse) {
+                responseObj = getScriptResponse(text);
+            }
 
- setTimeout(() => {
- const aiTextElement = document.getElementById(aiMsgId);
- 
- // Step 1: Type Intro
- typeText(aiTextElement, responseObj.intro, () => {
- // Step 2: If there is an essay, generate the Google Doc container
- if (responseObj.essayTitle && responseObj.essayBody) {
- const contentArea = aiContainer.querySelector('.ai-content-area');
- 
- // Create Doc Container
- const docContainer = document.createElement('div');
- docContainer.className = 'doc-paper';
- 
- // Create Title
- const docTitle = document.createElement('div');
- docTitle.className = 'doc-title';
- docTitle.textContent = responseObj.essayTitle;
- docContainer.appendChild(docTitle);
- 
- // Create Body Container (for typing)
- const docBody = document.createElement('div');
- docBody.className = 'typing-cursor'; // Move cursor here
- aiTextElement.classList.remove('typing-cursor'); // Remove cursor from intro
- 
- docContainer.appendChild(docBody);
- contentArea.appendChild(docContainer);
- 
- scrollToBottom();
- 
- // Step 3: Type Essay Body
- setTimeout(() => {
- typeText(docBody, responseObj.essayBody, () => {
- docBody.classList.remove('typing-cursor');
- isTyping = false;
- }, 5); // Faster typing for essay
- }, 300);
- } else {
- isTyping = false;
- aiTextElement.classList.remove('typing-cursor');
- }
- });
- }, 800 + Math.random() * 1000);
- }
+            setTimeout(() => {
+                const aiTextElement = document.getElementById(aiMsgId);
+                
+                // Step 1: Type Intro
+                typeText(aiTextElement, responseObj.intro, () => {
+                    // Step 2: If there is an essay, generate the Google Doc container
+                    if (responseObj.essayTitle && responseObj.essayBody) {
+                        const contentArea = aiContainer.querySelector('.ai-content-area');
+                        
+                        // Create Doc Container
+                        const docContainer = document.createElement('div');
+                        docContainer.className = 'doc-paper';
+                        
+                        // Create Title
+                        const docTitle = document.createElement('div');
+                        docTitle.className = 'doc-title';
+                        docTitle.textContent = responseObj.essayTitle;
+                        docContainer.appendChild(docTitle);
+                        
+                        // Create Body Container (for typing)
+                        const docBody = document.createElement('div');
+                        docBody.className = 'typing-cursor'; // Move cursor here
+                        aiTextElement.classList.remove('typing-cursor'); // Remove cursor from intro
+                        
+                        docContainer.appendChild(docBody);
+                        contentArea.appendChild(docContainer);
+                        
+                        scrollToBottom();
+                        
+                        // Step 3: Type Essay Body
+                        setTimeout(() => {
+                            typeText(docBody, responseObj.essayBody, () => {
+                                docBody.classList.remove('typing-cursor');
+                                isTyping = false;
+                            }, 5); // Faster typing for essay
+                        }, 300);
+                    } else {
+                        isTyping = false;
+                        aiTextElement.classList.remove('typing-cursor');
+                    }
+                });
+            }, 800 + Math.random() * 1000);
+        }
 
- function addMessageToDom(role, text) {
- const div = document.createElement('div');
- div.className = 'flex gap-4 w-full justify-end'; 
- div.innerHTML = `
- <div class="flex-1 space-y-1 text-right">
- <div class="ai-text-theme font-bold text-sm text-red-900">You</div>
- <div class="user-bubble-theme inline-block text-left bg-white text-red-900 px-4 py-3 rounded-2xl rounded-tr-sm whitespace-pre-wrap shadow-sm shadow-red-100 border border-red-100">${escapeHtml(text)}</div>
- </div>
- <div class="user-bubble-theme w-8 h-8 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-1 border border-red-200">
- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
- </div>
- `;
- messagesList.appendChild(div);
- }
+        function addMessageToDom(role, text) {
+            const div = document.createElement('div');
+            div.className = 'flex gap-4 w-full justify-end'; 
+            div.innerHTML = `
+                <div class="flex-1 space-y-1 text-right">
+                    <div class="ai-text-theme font-bold text-sm text-red-900">You</div>
+                    <div class="user-bubble-theme inline-block text-left bg-white text-red-900 px-4 py-3 rounded-2xl rounded-tr-sm whitespace-pre-wrap shadow-sm shadow-red-100 border border-red-100">${escapeHtml(text)}</div>
+                </div>
+                <div class="user-bubble-theme w-8 h-8 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mt-1 border border-red-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </div>
+            `;
+            messagesList.appendChild(div);
+        }
 
- function typeText(element, fullText, callback, speed = 30) {
- let index = 0;
- const typeChar = () => {
- if (index < fullText.length) {
- element.textContent += fullText.charAt(index);
- index++;
- scrollToBottom();
- setTimeout(typeChar, speed); 
- } else {
- if (callback) callback();
- }
- };
- typeChar();
- }
+        function typeText(element, fullText, callback, speed = 30) {
+            let index = 0;
+            const typeChar = () => {
+                if (index < fullText.length) {
+                    element.textContent += fullText.charAt(index);
+                    index++;
+                    scrollToBottom();
+                    setTimeout(typeChar, speed); 
+                } else {
+                    if (callback) callback();
+                }
+            };
+            typeChar();
+        }
 
- function scrollToBottom() {
- chatContainer.scrollTop = chatContainer.scrollHeight;
- }
+        function scrollToBottom() {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
 
- function escapeHtml(text) {
- const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
- return text.replace(/[&<>"']/g, function(m) { return map[m]; });
- }
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
 
- // --- Voice Dictation (Web Speech API) ---
+        // --- Voice Dictation (Web Speech API) ---
 
- function toggleDictation() {
- if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
- alert("Your browser does not support voice dictation.");
- return;
- }
+        function toggleDictation() {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                alert("Your browser does not support voice dictation.");
+                return;
+            }
 
- if (isListening) {
- stopDictation();
- } else {
- startDictation();
- }
- }
+            if (isListening) {
+                stopDictation();
+            } else {
+                startDictation();
+            }
+        }
 
- function startDictation() {
- const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
- recognition = new SpeechRecognition();
- recognition.lang = 'en-US';
- recognition.interimResults = false;
- recognition.maxAlternatives = 1;
+        function startDictation() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
 
- recognition.start();
- isListening = true;
- micBtn.classList.add('listening');
+            recognition.start();
+            isListening = true;
+            micBtn.classList.add('listening');
 
- recognition.onresult = (event) => {
- const speechResult = event.results[0][0].transcript;
- userInput.value += (userInput.value.length > 0 ? ' ' : '') + speechResult;
- userInput.style.height = userInput.scrollHeight + 'px';
- stopDictation();
- };
- recognition.onspeechend = () => stopDictation();
- recognition.onerror = () => stopDictation();
- }
+            recognition.onresult = (event) => {
+                const speechResult = event.results[0][0].transcript;
+                userInput.value += (userInput.value.length > 0 ? ' ' : '') + speechResult;
+                userInput.style.height = userInput.scrollHeight + 'px';
+                stopDictation();
+            };
+            recognition.onspeechend = () => stopDictation();
+            recognition.onerror = () => stopDictation();
+        }
 
- function stopDictation() {
- if (recognition) recognition.stop();
- isListening = false;
- micBtn.classList.remove('listening');
- }
+        function stopDictation() {
+            if (recognition) recognition.stop();
+            isListening = false;
+            micBtn.classList.remove('listening');
+        }
 
- // --- Voice Mode Fake Overlay Logic ---
- 
- const voiceScreen = document.getElementById('voice-mode-screen');
- const voiceStatus = document.getElementById('voice-status');
- const mainOrb = document.getElementById('main-orb');
+        // --- Voice Mode Fake Overlay Logic ---
+        
+        const voiceScreen = document.getElementById('voice-mode-screen');
+        const mainOrb = document.getElementById('main-orb');
 
- function toggleVoiceMode() {
- if (voiceScreen.classList.contains('hidden')) {
- voiceScreen.classList.remove('hidden');
- voiceScreen.style.opacity = '0';
- setTimeout(() => voiceScreen.style.opacity = '1', 10);
- setVoiceState('listening'); // Default to listening
- } else {
- voiceScreen.style.opacity = '0';
- setTimeout(() => voiceScreen.classList.add('hidden'), 500);
- }
- }
+        function toggleVoiceMode() {
+            if (voiceScreen.classList.contains('hidden')) {
+                // OPENING
+                voiceScreen.classList.remove('hidden');
+                voiceScreen.style.opacity = '0';
+                
+                // Reset states so only the entry animation plays initially
+                mainOrb.classList.remove('state-listening', 'state-thinking', 'state-speaking');
 
- function setVoiceState(state) {
- // Reset classes
- mainOrb.classList.remove('state-listening', 'state-thinking', 'state-speaking');
- 
- if (state === 'listening') {
- voiceStatus.innerText = "Listening...";
- mainOrb.classList.add('state-listening');
- } else if (state === 'thinking') {
- voiceStatus.innerText = "Thinking...";
- mainOrb.classList.add('state-thinking');
- } else if (state === 'speaking') {
- voiceStatus.innerText = "Psyche is speaking...";
- mainOrb.classList.add('state-speaking');
- }
- }
+                // Add pop animation to orb
+                mainOrb.classList.remove('orb-enter'); // Reset to ensure replay
+                void mainOrb.offsetWidth; // Trigger reflow
+                mainOrb.classList.add('orb-enter');
 
- // --- Dark Theme Toggle ---
- function toggleTheme() {
- document.body.classList.toggle('theme-dark');
- currentTheme = document.body.classList.contains('theme-dark') ? 'theme-dark' : 'light';
- }
+                setTimeout(() => voiceScreen.style.opacity = '1', 10);
 
- // --- Configuration Modal Logic ---
+                // AUTOMATIC TRANSITION: Listen for animation end for perfect timing
+                const onAnimationEnd = () => {
+                    // Check if still open to avoid race conditions if user closes quickly
+                    if (!voiceScreen.classList.contains('hidden')) {
+                        mainOrb.classList.remove('orb-enter'); // Remove entry class
+                        setVoiceState('thinking'); // Auto-switch to Thinking
+                    }
+                    mainOrb.removeEventListener('animationend', onAnimationEnd);
+                };
 
- function toggleConfigModal() {
- if (configModal.classList.contains('hidden')) {
- configModal.classList.remove('hidden');
- fakeResponseInput.value = targetResponse;
- } else {
- configModal.classList.add('hidden');
- }
- }
+                // Remove any previous listener just in case
+                mainOrb.removeEventListener('animationend', onAnimationEnd);
+                mainOrb.addEventListener('animationend', onAnimationEnd);
 
- function saveConfig() {
- targetResponse = fakeResponseInput.value;
- localStorage.setItem('fakeAiResponse', targetResponse);
- toggleConfigModal();
- }
+            } else {
+                // CLOSING
+                voiceScreen.style.opacity = '0';
+                setTimeout(() => {
+                    voiceScreen.classList.add('hidden');
+                    mainOrb.classList.remove('orb-enter'); // Clean up
+                    mainOrb.classList.remove('state-thinking', 'state-speaking'); // Reset states
+                }, 500);
+            }
+        }
 
- function clearResponse() {
- fakeResponseInput.value = "";
- targetResponse = "";
- localStorage.removeItem('fakeAiResponse');
- }
+        function setVoiceState(state) {
+            // Reset classes
+            mainOrb.classList.remove('state-listening', 'state-thinking', 'state-speaking');
+            
+            if (state === 'thinking') {
+                mainOrb.classList.add('state-thinking');
+            } else if (state === 'speaking') {
+                mainOrb.classList.add('state-speaking');
+            }
+        }
 
- configModal.addEventListener('click', (e) => {
- if (e.target === configModal) toggleConfigModal();
- });
+        // --- New Function: Simulate Thinking to Speaking Transition ---
+        function triggerThinkToSpeak() {
+            setVoiceState('thinking');
+            // Wait 3 seconds then switch to speaking
+            setTimeout(() => {
+                setVoiceState('speaking');
+            }, 3000);
+        }
 
- </script>
+        // --- DELAY FUNCTIONALITY ---
+        function toggleDelayMode() {
+            delayMode = !delayMode;
+            const btn = document.getElementById('delay-btn');
+            if (delayMode) {
+                btn.classList.add('delay-active');
+            } else {
+                btn.classList.remove('delay-active');
+            }
+        }
+
+        function handleAction(action) {
+            if (delayMode) {
+                setTimeout(action, 10000); // 10s Delay
+            } else {
+                action();
+            }
+        }
+
+        // --- Dark Theme Toggle ---
+        function toggleTheme() {
+            document.body.classList.toggle('theme-dark');
+            currentTheme = document.body.classList.contains('theme-dark') ? 'theme-dark' : 'light';
+        }
+
+        // --- Configuration Modal Logic ---
+
+        function toggleConfigModal() {
+            if (configModal.classList.contains('hidden')) {
+                configModal.classList.remove('hidden');
+                fakeResponseInput.value = targetResponse;
+            } else {
+                configModal.classList.add('hidden');
+            }
+        }
+
+        function saveConfig() {
+            targetResponse = fakeResponseInput.value;
+            localStorage.setItem('fakeAiResponse', targetResponse);
+            toggleConfigModal();
+        }
+
+        function clearResponse() {
+            fakeResponseInput.value = "";
+            targetResponse = "";
+            localStorage.removeItem('fakeAiResponse');
+        }
+
+        configModal.addEventListener('click', (e) => {
+            if (e.target === configModal) toggleConfigModal();
+        });
+
+        // --- Keyboard Shortcuts ---
+        document.addEventListener('keydown', (e) => {
+            // Prevent triggering while typing in text box
+            if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+
+            const key = e.key.toLowerCase();
+            
+            if (key === 't') {
+                // Trigger Thinking Animation
+                // Check if voice screen is hidden first
+                const isHidden = document.getElementById('voice-mode-screen').classList.contains('hidden');
+                
+                const action = () => {
+                    if (isHidden) {
+                        toggleVoiceMode(); // Auto-open voice mode if closed
+                        setTimeout(() => setVoiceState('thinking'), 100);
+                    } else {
+                        setVoiceState('thinking');
+                    }
+                };
+                
+                handleAction(action);
+
+            } else if (key === 's') {
+                // Trigger Speaking Animation
+                const isHidden = document.getElementById('voice-mode-screen').classList.contains('hidden');
+                
+                const action = () => {
+                    if (isHidden) {
+                        toggleVoiceMode(); // Auto-open voice mode if closed
+                        setTimeout(() => setVoiceState('speaking'), 100);
+                    } else {
+                        setVoiceState('speaking');
+                    }
+                };
+
+                handleAction(action);
+
+            } else if (key === 'e') {
+                // Toggle Evil Mode
+                toggleTheme();
+            } else if (key === 'd') {
+                // Toggle Delay Mode
+                toggleDelayMode();
+            } else if (key === 'c') {
+                // Trigger Transition (Simulate Reply)
+                handleAction(() => triggerThinkToSpeak());
+            }
+        });
+
+    </script>
 </body>
 </html>
